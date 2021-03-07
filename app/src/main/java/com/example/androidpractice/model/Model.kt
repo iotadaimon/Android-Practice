@@ -1,9 +1,10 @@
 package com.example.androidpractice.model
 
 import com.example.androidpractice.Contract
+import com.example.androidpractice.TMDBService
 import com.example.androidpractice.model.entity.Movie
 
-class Model : Contract.Model {
+class Model(val tmdbService: TMDBService) : Contract.Model {
 
     override fun getPopularMovies(
         apiKey: String,
