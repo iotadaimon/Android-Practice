@@ -11,7 +11,7 @@
         android:theme="@style/Theme.AndroidPractice">
 
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".activity.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
             <intent-filter>
@@ -21,9 +21,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".GoogleLoginActivity" />
+        <activity android:name=".activity.GoogleLoginActivity" />
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.MainActivity" />
 
     </application>
 

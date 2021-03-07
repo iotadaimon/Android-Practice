@@ -1,5 +1,6 @@
 package com.example.androidpractice
 
+import com.example.androidpractice.model.TMDBService
 import com.example.androidpractice.model.entity.Movie
 
 interface Contract {
