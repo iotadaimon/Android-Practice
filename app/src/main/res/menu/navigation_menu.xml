@@ -6,10 +6,10 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/allMoviesFragment"
+            android:id="@+id/all_movies_menu_item"
             android:title="@string/all_movies_menu_item" />
         <item
-            android:id="@+id/likedMoviesFragment"
+            android:id="@+id/liked_movies_menu_item"
             android:title="@string/liked_movies_menu_item" />
 
     </group>

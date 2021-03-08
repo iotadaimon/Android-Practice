@@ -10,10 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidPractice">
 
-        <activity
-            android:name=".activity.SplashScreenActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-
+        <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
