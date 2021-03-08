@@ -7,10 +7,10 @@ interface Contract {
 
     interface Model {
         fun getPopularMovies(
-                apiKey: String,
-                language: String = TMDBService.DEFAULT_LANGUAGE_ARGUMENT,
-                page: Int = TMDBService.DEFAULT_PAGE_ARGUMENT,
-                region: String = TMDBService.DEFAULT_REGION_ARGUMENT
+            apiKey: String,
+            language: String = TMDBService.DEFAULT_LANGUAGE_ARGUMENT,
+            page: Int = TMDBService.DEFAULT_PAGE_ARGUMENT,
+            region: String = TMDBService.DEFAULT_REGION_ARGUMENT
         ): List<Movie>
     }
 

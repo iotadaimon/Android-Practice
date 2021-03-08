@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Android Practice</string>
     <string name="splash_screen_image_description">App logo</string>
+    <string name="tmdb_api_response_error_message">Error while retrieving data from TMDB</string>
 </resources>
