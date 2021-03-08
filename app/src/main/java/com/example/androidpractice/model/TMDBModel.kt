@@ -5,7 +5,7 @@ import com.example.androidpractice.model.entity.Movie
 import java.io.IOException
 import kotlin.jvm.Throws
 
-class Model(val tmdbService: TMDBService) : Contract.Model {
+class TMDBModel(val tmdbService: TMDBService) : Contract.TMDBModel {
 
     private companion object {
         const val API_KEY: String = "bd1a81fe362d2ec1258025a8ceb7a552"

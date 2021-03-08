@@ -5,9 +5,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.androidpractice.Contract
 import com.example.androidpractice.R
+import com.example.androidpractice.model.entity.Movie
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Contract.View {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
@@ -32,5 +34,13 @@ class MainActivity : AppCompatActivity() {
             true
         else
             super.onOptionsItemSelected(item)
+    }
+
+    override fun showAllMovies(movies: List<Movie>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showLikedMovies(movies: List<Movie>) {
+        TODO("Not yet implemented")
     }
 }

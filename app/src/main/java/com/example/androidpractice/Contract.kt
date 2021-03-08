@@ -5,7 +5,7 @@ import com.example.androidpractice.model.entity.Movie
 
 interface Contract {
 
-    interface Model {
+    interface TMDBModel {
         fun getPopularMovies(
             apiKey: String,
             language: String = TMDBService.DEFAULT_LANGUAGE_ARGUMENT,
@@ -15,11 +15,15 @@ interface Contract {
     }
 
     interface View {
-        // TODO
+        fun showAllMovies(movies: List<Movie>)
+        fun showLikedMovies(movies: List<Movie>)
     }
 
     interface Presenter {
-        // TODO
+        fun getAllMovies()
+        fun getLikedMovies()
+        fun addLikedMovie()
+        fun removeLikedMovie()
     }
 
 }
