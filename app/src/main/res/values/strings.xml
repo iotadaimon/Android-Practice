@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Android Practice</string>
     <string name="splash_screen_image_description">App logo</string>
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
     <string name="tmdb_api_response_error_message">Error while retrieving data from TMDB</string>
+
+    <string name="item_1">TODO 1</string>
+    <string name="item_2">TODO 2</string>
+    <string name="item_3">TODO 3</string>
 </resources>
