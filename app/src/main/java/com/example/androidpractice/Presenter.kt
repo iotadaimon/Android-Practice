@@ -1,14 +1,12 @@
 package com.example.androidpractice
 
 import com.example.androidpractice.model.entity.Movie
-import java.io.Serializable
 
-// TODO - replace Serializable with Parcelable and implement
 class Presenter(
     private val tmdbModel: Contract.TMDBModel,
     private val likedMoviesModel: Contract.LikedMoviesModel,
-    private var view: Contract.View? = null
-) : Contract.Presenter, Serializable {
+    private val view: Contract.View
+) : Contract.Presenter {
 
     override fun registerView(view: Contract.View) {
         TODO("Not yet implemented")
