@@ -26,6 +26,7 @@ interface Contract {
     }
 
     interface Presenter {
+        fun registerView(view: View)
         fun presentAllMovies()
         fun presentLikedMovies()
         fun addLikedMovie(movie: Movie)
