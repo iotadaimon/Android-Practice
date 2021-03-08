@@ -17,6 +17,7 @@ class AllMoviesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity?.setTitle(R.string.all_movies_menu_item)
         return inflater.inflate(R.layout.fragment_all_movies, container, false)
     }
 
