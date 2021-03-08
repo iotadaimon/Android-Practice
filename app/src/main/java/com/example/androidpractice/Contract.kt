@@ -14,16 +14,22 @@ interface Contract {
         ): List<Movie>
     }
 
+    interface LikedMoviesModel {
+        fun getLikedMovies(): List<Movie>
+        fun addLikedMovie(movie: Movie)
+        fun deleteLikedMovie(movie: Movie)
+    }
+
     interface View {
         fun showAllMovies(movies: List<Movie>)
         fun showLikedMovies(movies: List<Movie>)
     }
 
     interface Presenter {
-        fun getAllMovies()
-        fun getLikedMovies()
-        fun addLikedMovie()
-        fun removeLikedMovie()
+        fun presentAllMovies()
+        fun presentLikedMovies()
+        fun addLikedMovie(movie: Movie)
+        fun deleteLikedMovie(movie: Movie)
     }
 
 }
