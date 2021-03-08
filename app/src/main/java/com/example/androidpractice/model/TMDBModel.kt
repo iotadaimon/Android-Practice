@@ -8,7 +8,7 @@ import kotlin.jvm.Throws
 class TMDBModel(val tmdbService: TMDBService) : Contract.TMDBModel {
 
     private companion object {
-        const val API_KEY: String = "bd1a81fe362d2ec1258025a8ceb7a552"
+        const val API_KEY: String = "bd1a81fe362d2ec1258025a8ceb7a552" // Sensitive data
     }
 
     @Throws(IOException::class)
