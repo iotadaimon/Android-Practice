@@ -7,9 +7,10 @@
 
     <string name="tmdb_api_response_error_message">Error while retrieving data from TMDB</string>
 
-    <string name="item_1">TODO 1</string>
-    <string name="item_2">TODO 2</string>
-    <string name="item_3">TODO 3</string>
+    <string name="all_movies_menu_item">All Movies</string>
+    <string name="liked_movies_menu_item">Liked Movies</string>
+    <string name="logout_menu_item">Logout (TODO)</string>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">TODO</string>
 </resources>
