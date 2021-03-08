@@ -7,7 +7,12 @@
 
     <fragment
         android:id="@+id/allMoviesFragment"
-        android:name="com.example.androidpractice.AllMoviesFragment"
+        android:name="com.example.androidpractice.fragment.AllMoviesFragment"
         android:label="fragment_all_movies"
         tools:layout="@layout/fragment_all_movies" />
+    <fragment
+        android:id="@+id/likedMoviesFragment"
+        android:name="com.example.androidpractice.fragment.LikedMoviesFragment"
+        android:label="fragment_liked_movies"
+        tools:layout="@layout/fragment_liked_movies" />
 </navigation>
