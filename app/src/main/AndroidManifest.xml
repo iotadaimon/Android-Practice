@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidPractice">
 
-        <activity android:name=".activity.SplashScreenActivity">
+        <activity
+            android:name=".activity.SplashScreenActivity"
+            android:theme="@style/Theme.AndroidPractice.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +22,9 @@
 
         <activity android:name=".activity.GoogleLoginActivity" />
 
-        <activity android:name=".activity.MainActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/Theme.AndroidPractice.NoActionBar" />
 
     </application>
 

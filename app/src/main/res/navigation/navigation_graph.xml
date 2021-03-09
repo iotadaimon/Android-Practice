@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/allMoviesFragment">
+    app:startDestination="@+id/nav_all_movies">
 
     <fragment
-        android:id="@+id/allMoviesFragment"
+        android:id="@+id/nav_all_movies"
         android:name="com.example.androidpractice.fragment.AllMoviesFragment"
         android:label="fragment_all_movies"
         tools:layout="@layout/fragment_all_movies" />
     <fragment
-        android:id="@+id/likedMoviesFragment"
+        android:id="@+id/nav_liked_movies"
         android:name="com.example.androidpractice.fragment.LikedMoviesFragment"
         android:label="fragment_liked_movies"
         tools:layout="@layout/fragment_liked_movies" />
