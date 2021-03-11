@@ -1,5 +1,6 @@
 package com.example.androidpractice
 
+import com.example.androidpractice.model.TMDBModel
 import com.example.androidpractice.model.entity.Movie
 
 class Presenter(
@@ -13,7 +14,8 @@ class Presenter(
     }
 
     override fun presentAllMovies() {
-        TODO("Not yet implemented")
+        val movies = tmdbModel.getPopularMovies(TMDBModel.API_KEY) // TODO - launch in a separate thread
+        view.showAllMovies(movies)
     }
 
     override fun presentLikedMovies() {

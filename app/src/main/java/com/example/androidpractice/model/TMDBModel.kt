@@ -7,7 +7,7 @@ import kotlin.jvm.Throws
 
 class TMDBModel(val tmdbService: TMDBService) : Contract.TMDBModel {
 
-    private companion object {
+    companion object {
         const val API_KEY: String = "bd1a81fe362d2ec1258025a8ceb7a552" // Sensitive data
     }
 
@@ -18,7 +18,7 @@ class TMDBModel(val tmdbService: TMDBService) : Contract.TMDBModel {
         page: Int,
         region: String
     ): List<Movie> {
-        val response = tmdbService.getPopularMovies(API_KEY).execute()
+        val response = tmdbService.getPopularMovies(apiKey).execute()
         if (response.isSuccessful) {
             return response.body()?.results ?: emptyList()
         } else {
