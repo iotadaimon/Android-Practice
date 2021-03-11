@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.NavHostFragment
 import com.example.androidpractice.Contract
 import com.example.androidpractice.Presenter
 import com.example.androidpractice.R
@@ -35,7 +36,8 @@ class MainActivity : AppCompatActivity(), Contract.View {
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController =
+            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.nav_all_movies, R.id.nav_liked_movies),
             drawerLayout
