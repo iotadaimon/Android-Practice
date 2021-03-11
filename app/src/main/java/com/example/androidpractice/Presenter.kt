@@ -2,6 +2,9 @@ package com.example.androidpractice
 
 import com.example.androidpractice.model.TMDBModel
 import com.example.androidpractice.model.entity.Movie
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 class Presenter(
     private val tmdbModel: Contract.TMDBModel,
@@ -13,8 +16,14 @@ class Presenter(
         TODO("Not yet implemented")
     }
 
+    // TODO - Perform requests asynchronously
+    // TODO - Pass a coroutine scope as an argument
     override fun presentAllMovies() {
-        val movies = tmdbModel.getPopularMovies(TMDBModel.API_KEY) // TODO - launch in a separate thread
+        val movies = runBlocking {
+            GlobalScope.async {
+                tmdbModel.getPopularMovies(TMDBModel.API_KEY)
+            }.await()
+        }
         view.showAllMovies(movies)
     }
 
