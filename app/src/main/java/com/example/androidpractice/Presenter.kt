@@ -28,7 +28,9 @@ class Presenter(
     }
 
     override fun presentLikedMovies() {
-        TODO("Not yet implemented")
+        val movies = emptyList<Movie>() // TODO - Fetch movies from local storage
+
+        view.showLikedMovies(movies)
     }
 
     override fun addLikedMovie(movie: Movie) {

@@ -87,7 +87,12 @@ class MainActivity : AppCompatActivity(), Contract.View {
     }
 
     override fun showLikedMovies(movies: List<Movie>) {
-        TODO("Not yet implemented")
+        drawerLayout.closeDrawers()
+
+        val arguments = Bundle()
+        arguments.putParcelableArrayList("data", ArrayList(movies)) // TODO - define the key as a constant
+
+        navController.navigate(R.id.nav_all_movies, arguments)
     }
 
 }
