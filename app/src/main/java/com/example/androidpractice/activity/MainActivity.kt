@@ -79,14 +79,11 @@ class MainActivity : AppCompatActivity(), Contract.View {
 
     override fun showAllMovies(movies: List<Movie>) {
         drawerLayout.closeDrawers()
-        val fragment =
-            AllMoviesFragment() // TODO - implement Parcelable for Movie.class, put into Bundles and pass to the fragment?
-        val bundle = Bundle()
-        bundle.putParcelableArray("data", movies.toTypedArray())
-        val ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.nav_host_fragment, fragment);
-        ft.commit();
-        navController.navigate(R.id.nav_all_movies, bundle)
+
+        val arguments = Bundle()
+        arguments.putParcelableArrayList("data", ArrayList(movies)) // TODO - define the key as a constant
+
+        navController.navigate(R.id.nav_all_movies, arguments)
     }
 
     override fun showLikedMovies(movies: List<Movie>) {

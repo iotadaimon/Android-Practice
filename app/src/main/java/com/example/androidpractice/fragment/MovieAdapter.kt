@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 
-class MovieAdapter(val movieList: List<Movie>) :
+class MovieAdapter(private val movieList: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     // Describes an item view and its place within the RecyclerView

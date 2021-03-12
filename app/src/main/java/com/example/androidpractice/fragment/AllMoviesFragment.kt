@@ -19,13 +19,14 @@ class AllMoviesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // TODO - fix types
-        val movieList = arguments?.getParcelableArrayList<Movie>("data")
+        val view = inflater.inflate(R.layout.fragment_all_movies, container, false)
 
-        val recyclerView: RecyclerView? = view?.findViewById(R.id.all_movies_recycler_view)
-        recyclerView?.adapter = MovieAdapter(movieList!!.toList())
+        val movieList = arguments?.getParcelableArrayList<Movie>("data") // TODO - use a constant
 
-        return inflater.inflate(R.layout.fragment_all_movies, container, false)
+        val recyclerView: RecyclerView = view.findViewById(R.id.all_movies_recycler_view)
+        recyclerView.adapter = MovieAdapter(movieList ?: emptyList())
+
+        return view
     }
 
 }
