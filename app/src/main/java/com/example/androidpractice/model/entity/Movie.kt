@@ -1,6 +1,5 @@
 package com.example.androidpractice.model.entity
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
