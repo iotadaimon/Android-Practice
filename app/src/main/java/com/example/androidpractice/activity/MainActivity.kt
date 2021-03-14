@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), Contract.View {
         val arguments = Bundle()
         arguments.putParcelableArrayList("data", ArrayList(movies)) // TODO - define the key as a constant
 
-        navController.navigate(R.id.nav_all_movies, arguments)
+        navController.navigate(R.id.nav_liked_movies, arguments)
     }
 
 }
