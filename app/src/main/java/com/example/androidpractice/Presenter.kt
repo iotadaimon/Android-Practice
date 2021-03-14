@@ -27,8 +27,9 @@ class Presenter(
         view.showAllMovies(movies)
     }
 
+    // TODO - Fetch movies from local storage
     override fun presentLikedMovies() {
-        val movies = emptyList<Movie>() // TODO - Fetch movies from local storage
+        val movies = emptyList<Movie>()
 
         view.showLikedMovies(movies)
     }
