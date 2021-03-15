@@ -32,7 +32,7 @@ class LikedMoviesFragment : Fragment(), MovieView {
         return view
     }
 
-    override fun showMovies(movies: Deferred<List<Movie>>) {
+    override fun showMovies(movies: List<Movie>) {
         TODO("Not yet implemented")
     }
 

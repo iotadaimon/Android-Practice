@@ -52,13 +52,8 @@ class AllMoviesFragment : Fragment(), MovieView {
         presenter.presentMovies()
     }
 
-    override fun showMovies(movies: Deferred<List<Movie>>) {
-        // TODO - Show a progress bar
-
-        runBlocking {
-            val moviesList = movies.await()
-            recyclerView.adapter = MovieAdapter(moviesList)
-        }
+    override fun showMovies(movies: List<Movie>) {
+        recyclerView.adapter = MovieAdapter(movies)
     }
 
     override fun showErrorToast() {

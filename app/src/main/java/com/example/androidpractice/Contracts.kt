@@ -14,11 +14,8 @@ interface MutableMovieModel : MovieModel {
 }
 
 interface MovieView {
-    fun showMovies(movies: Deferred<List<Movie>>)
 
-    fun showMovies(movies: List<Movie>) {
-        TODO("Not yet implemented")
-    }
+    fun showMovies(movies: List<Movie>)
 
     fun showErrorToast() {
         TODO("Not yet implemented")

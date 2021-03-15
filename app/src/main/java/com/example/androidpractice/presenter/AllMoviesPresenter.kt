@@ -5,6 +5,7 @@ import com.example.androidpractice.MoviePresenter
 import com.example.androidpractice.MovieView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
 class AllMoviesPresenter(private val model: MovieModel, private val view: MovieView) :
@@ -21,7 +22,11 @@ class AllMoviesPresenter(private val model: MovieModel, private val view: MovieV
             }
         }
 
-        view.showMovies(movies)
+        // TODO - implement a progress bar in the view
+
+        runBlocking {
+            view.showMovies(movies.await())
+        }
     }
 
 }
