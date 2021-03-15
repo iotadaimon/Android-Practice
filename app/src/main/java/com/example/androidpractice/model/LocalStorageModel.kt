@@ -1,19 +1,19 @@
 package com.example.androidpractice.model
 
-import com.example.androidpractice.Contract
+import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.model.entity.Movie
 
-class LocalStorageModel : Contract.LikedMoviesModel {
+class LocalStorageModel : MutableMovieModel {
 
-    override fun getLikedMovies(): List<Movie> {
+    override fun addMovie(movie: Movie) {
         TODO("Not yet implemented")
     }
 
-    override fun addLikedMovie(movie: Movie) {
+    override fun removeMovie(movie: Movie) {
         TODO("Not yet implemented")
     }
 
-    override fun deleteLikedMovie(movie: Movie) {
+    override suspend fun getMovies(): List<Movie> {
         TODO("Not yet implemented")
     }
 
