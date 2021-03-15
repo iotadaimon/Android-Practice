@@ -1,18 +1,19 @@
 package com.example.androidpractice.activity
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.FrameLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.navigation.NavigationView
-import androidx.navigation.findNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
 import com.example.androidpractice.Contract
 import com.example.androidpractice.Presenter
 import com.example.androidpractice.R
 import com.example.androidpractice.fragment.AllMoviesFragment
+import com.example.androidpractice.fragment.LikedMoviesFragment
 import com.example.androidpractice.model.LocalStorageModel
 import com.example.androidpractice.model.TMDBModel
 import com.example.androidpractice.model.TMDBService
@@ -24,12 +25,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), Contract.View {
 
+    companion object {
+        const val BUNDLE_DATA_KEY = "DATA_MOVIE_LIST"
+    }
+
     private lateinit var presenter: Contract.Presenter
 
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navController: NavController
+    private lateinit var toggle: ActionBarDrawerToggle
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var frameLayout: FrameLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,17 +47,19 @@ class MainActivity : AppCompatActivity(), Contract.View {
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
-        val navigationView: NavigationView = findViewById(R.id.navigation_view)
-        navController =
-            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
-        appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_all_movies, R.id.nav_liked_movies),
-            drawerLayout
+
+        toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
+        drawerLayout.addDrawerListener(toggle)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navigationView.setupWithNavController(navController)
-
+        val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_all_movies -> presenter.presentAllMovies()
@@ -60,6 +67,25 @@ class MainActivity : AppCompatActivity(), Contract.View {
             }
             true
         }
+
+        frameLayout = findViewById(R.id.fragment_frameLayout)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        toggle.syncState()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        toggle.onConfigurationChanged(newConfig)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initialisePresenter() {
@@ -71,28 +97,40 @@ class MainActivity : AppCompatActivity(), Contract.View {
         presenter = Presenter(TMDBModel(tmdbService), LocalStorageModel(), this)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-
     override fun showAllMovies(movies: List<Movie>) {
-        drawerLayout.closeDrawers()
-
-        val arguments = Bundle()
-        arguments.putParcelableArrayList("data", ArrayList(movies)) // TODO - define the key as a constant
-
-        navController.navigate(R.id.nav_all_movies, arguments)
+        showMoviesInFragment(movies, AllMoviesFragment::class.java)
     }
 
     override fun showLikedMovies(movies: List<Movie>) {
+        showMoviesInFragment(movies, LikedMoviesFragment::class.java)
+    }
+
+
+    /**
+     * Fills the [FrameLayout] with the fragment, whose class is specified by the [fragmentClass] argument,
+     * passes a list of [Movie] instances for display in the fragment.
+     */
+
+    private fun showMoviesInFragment(
+        movies: List<Movie>,
+        fragmentClass: Class<out androidx.fragment.app.Fragment>
+    ) {
         drawerLayout.closeDrawers()
 
-        val arguments = Bundle()
-        arguments.putParcelableArrayList("data", ArrayList(movies)) // TODO - define the key as a constant
+        val arguments = Bundle().apply {
+            putParcelableArrayList(
+                BUNDLE_DATA_KEY,
+                ArrayList(movies)
+            )
+        }
 
-        navController.navigate(R.id.nav_liked_movies, arguments)
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(
+            R.id.fragment_frameLayout,
+            fragmentClass,
+            arguments
+        )
+        fragmentTransaction.commit()
     }
 
 }

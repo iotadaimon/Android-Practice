@@ -2,18 +2,19 @@
     <string name="app_name">Android Practice</string>
     <string name="splash_screen_image_description">Application logo</string>
 
-    <string name="tmdb_api_response_error_message">Error while retrieving data from TMDB</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 
     <string name="nav_all_movies">All Movies</string>
     <string name="nav_liked_movies">Liked Movies</string>
     <string name="nav_logout">Logout (TODO)</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">TODO</string>
+    <string name="tmdb_api_response_error_message">Error while retrieving data from TMDB</string>
 
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
     <string name="movie_item_thumbnail">Movie thumbnail</string>
     <string name="movie_vote_average">Movie vote average</string>
 </resources>
