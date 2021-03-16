@@ -6,15 +6,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 
 
-class MovieAdapter(private val movieList: List<Movie>) :
+class MovieAdapter(private val movieList: List<Movie>, private val movieView: MovieView) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     // Describes an item view and its place within the RecyclerView
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         private val moviePosterIconImageView: ImageView =
             itemView.findViewById(R.id.movie_item_poster_icon)
         private val movieTitleTextView: TextView =
@@ -27,6 +29,7 @@ class MovieAdapter(private val movieList: List<Movie>) :
             movieTitleTextView.text = movie.title
             movieVoteAverageTextView.text = movie.voteAverage.toString()
         }
+
     }
 
     // Returns a new ViewHolder
@@ -45,6 +48,9 @@ class MovieAdapter(private val movieList: List<Movie>) :
     // Displays data at a certain position
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(movieList[position])
+        holder.itemView.setOnClickListener {
+            movieView.showMovieDetails(movieList[position])
+        }
     }
 
 }
