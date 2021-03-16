@@ -1,5 +1,6 @@
 package com.example.androidpractice.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.androidpractice.presenter.AllMoviesPresenter
 import com.example.androidpractice.MoviePresenter
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
+import com.example.androidpractice.activity.MovieDetailsActivity
 import com.example.androidpractice.model.web.TMDBModel
 import com.example.androidpractice.model.web.TMDBService
 import com.example.androidpractice.model.entity.Movie
@@ -52,7 +54,13 @@ class AllMoviesFragment : Fragment(), MovieView {
     }
 
     override fun showMovies(movies: List<Movie>) {
-        recyclerView.adapter = MovieAdapter(movies)
+        recyclerView.adapter = MovieAdapter(movies, this)
+    }
+
+    override fun showMovieDetails(movie: Movie) {
+        val intent = Intent(context, MovieDetailsActivity::class.java)
+        intent.putExtra(MovieDetailsActivity.DATA_MOVIE, movie)
+        startActivity(intent)
     }
 
     override fun showErrorToast() {

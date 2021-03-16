@@ -1,5 +1,6 @@
 package com.example.androidpractice
 
+import android.view.View
 import com.example.androidpractice.model.entity.Movie
 
 
@@ -15,6 +16,8 @@ interface MutableMovieModel : MovieModel {
 interface MovieView {
 
     fun showMovies(movies: List<Movie>)
+
+    fun showMovieDetails(movie: Movie)
 
     fun showErrorToast() {
         TODO("Not yet implemented")

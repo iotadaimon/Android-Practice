@@ -36,6 +36,10 @@ class LikedMoviesFragment : Fragment(), MovieView {
         TODO("Not yet implemented")
     }
 
+    override fun showMovieDetails(movie: Movie) {
+        TODO("Not yet implemented")
+    }
+
     override fun showErrorToast() {
         super.showErrorToast()
     }
