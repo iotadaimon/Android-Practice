@@ -7,44 +7,44 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Movie(
     @SerializedName("poster_path")
-    val posterPath: String?,
+    val posterPath: String? = null,
 
     @SerializedName("adult")
-    val adult: Boolean?,
+    val adult: Boolean? = null,
 
     @SerializedName("overview")
-    val overview: String?,
+    val overview: String? = null,
 
     @SerializedName("release_date")
-    val releaseDate: String?,
+    val releaseDate: String? = null,
 
     @SerializedName("genre_ids")
-    val genreIDs: List<Int>?,
+    val genreIDs: List<Int>? = null,
 
     @SerializedName("id")
-    val id: Int?,
+    val id: Int? = null,
 
     @SerializedName("original_title")
-    val originalTitle: String?,
+    val originalTitle: String? = null,
 
     @SerializedName("original_language")
-    val originalLanguage: String?,
+    val originalLanguage: String? = null,
 
     @SerializedName("title")
-    val title: String?,
+    val title: String? = null,
 
     @SerializedName("backdrop_path")
-    val backdropPath: String?,
+    val backdropPath: String? = null,
 
     @SerializedName("popularity")
-    val popularity: Number?,
+    val popularity: Number? = null,
 
     @SerializedName("vote_count")
-    val voteCount: Int?,
+    val voteCount: Int? = null,
 
     @SerializedName("video")
-    val video: Boolean?,
+    val video: Boolean? = null,
 
     @SerializedName("vote_average")
-    val voteAverage: Number?
+    val voteAverage: Number? = null
 ) : Parcelable
