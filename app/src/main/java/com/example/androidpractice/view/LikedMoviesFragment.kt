@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
-import kotlinx.coroutines.Deferred
+
 
 // TODO
 class LikedMoviesFragment : Fragment(), MovieView {

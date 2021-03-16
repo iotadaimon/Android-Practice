@@ -1,7 +1,6 @@
 package com.example.androidpractice
 
 import com.example.androidpractice.model.entity.Movie
-import kotlinx.coroutines.Deferred
 
 
 interface MovieModel {
@@ -20,6 +19,7 @@ interface MovieView {
     fun showErrorToast() {
         TODO("Not yet implemented")
     }
+
 }
 
 interface MoviePresenter {

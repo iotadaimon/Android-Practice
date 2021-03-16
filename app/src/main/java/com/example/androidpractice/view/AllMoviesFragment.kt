@@ -14,8 +14,6 @@ import com.example.androidpractice.R
 import com.example.androidpractice.model.TMDBModel
 import com.example.androidpractice.model.TMDBService
 import com.example.androidpractice.model.entity.Movie
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.runBlocking
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -24,6 +22,7 @@ class AllMoviesFragment : Fragment(), MovieView {
     private lateinit var presenter: MoviePresenter
 
     private lateinit var recyclerView: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
