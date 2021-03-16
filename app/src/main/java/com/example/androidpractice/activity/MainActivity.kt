@@ -1,8 +1,6 @@
 package com.example.androidpractice.activity
 
-import android.content.res.Configuration
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -14,14 +12,13 @@ import com.example.androidpractice.R
 import com.example.androidpractice.view.AllMoviesFragment
 import com.example.androidpractice.view.LikedMoviesFragment
 
-// TODO - Load all movies at launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
-
-    private lateinit var frameLayout: FrameLayout
+    private lateinit var navigationView: NavigationView
+    private lateinit var fragmentFrameLayout: FrameLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,14 +38,15 @@ class MainActivity : AppCompatActivity() {
             R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val navigationView: NavigationView = findViewById(R.id.navigation_view)
+        navigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_all_movies -> switchFragment(AllMoviesFragment())
-                R.id.nav_liked_movies -> switchFragment(LikedMoviesFragment())
+                R.id.nav_all_movies -> showAllMoviesFragment()
+                R.id.nav_liked_movies -> showLikedMoviesFragment()
                 R.id.nav_logout -> Toast
                     .makeText(this, "Not implemented", Toast.LENGTH_SHORT)
                     .show()
@@ -56,7 +54,13 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        frameLayout = findViewById(R.id.fragment_frameLayout)
+        fragmentFrameLayout = findViewById(R.id.fragment_frameLayout)
+
+        if (savedInstanceState == null) {
+            // Show the default fragment
+            navigationView.setCheckedItem(R.id.nav_all_movies)
+            showAllMoviesFragment()
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -64,17 +68,9 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        toggle.onConfigurationChanged(newConfig)
-    }
+    private fun showAllMoviesFragment() = switchFragment(AllMoviesFragment())
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
+    private fun showLikedMoviesFragment() = switchFragment(LikedMoviesFragment())
 
     private fun switchFragment(fragment: androidx.fragment.app.Fragment) {
         drawerLayout.closeDrawers()
