@@ -22,11 +22,11 @@
     <!-- Movie items in fragment RecyclerView's -->
     <string name="movie_item_thumbnail">Movie thumbnail</string>
     <string name="movie_vote_average">Movie vote average</string>
-    <string name="recyclerview_item_movie_hint_vote_average">Vote average</string>
-    <string name="recyclerview_item_movie_hint_movie_title">Movie title</string>
+    <string name="recyclerview_item_movie_descrtiption_vote_average">Vote average</string>
+    <string name="recyclerview_item_movie_description_movie_title">Movie title</string>
 
     <!-- Movie properties in MovieDetailsActivity  -->
     <string name="movie_poster_imageView_content_description">Movie poster</string>
-    <string name="movie_property_textView_hint_property_value">Property value</string>
-    <string name="movie_property_textView_hint_property_name">Property name</string>
+    <string name="movie_property_textView_description_property_value">Property value</string>
+    <string name="movie_property_textView_description_property_name">Property name</string>
 </resources>
