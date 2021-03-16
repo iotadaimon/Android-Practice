@@ -32,7 +32,7 @@ class MovieAdapter(private val movieList: List<Movie>) :
     // Returns a new ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.movie_item, parent, false)
+            .inflate(R.layout.recyclerview_item_movie, parent, false)
 
         return MovieViewHolder(view)
     }

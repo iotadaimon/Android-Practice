@@ -5,16 +5,25 @@
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
 
+    <!-- Navigation header -->
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
+    <!-- Navigation drawer items -->
     <string name="nav_all_movies">All Movies</string>
     <string name="nav_liked_movies">Liked Movies</string>
-    <string name="nav_logout">Logout (TODO)</string>
+    <string name="nav_logout">Logout</string>
 
+    <!--  -->
     <string name="tmdb_api_response_error_message">Error while retrieving data from TMDB</string>
 
+    <!-- Movie items in fragment RecyclerView's -->
     <string name="movie_item_thumbnail">Movie thumbnail</string>
     <string name="movie_vote_average">Movie vote average</string>
+    <string name="recyclerview_item_movie_hint_vote_average">Vote average</string>
+    <string name="recyclerview_item_movie_hint_movie_title">Movie title</string>
+
+    <!-- Movie properties in MovieDetailsActivity  -->
+    <string name="movie_poster_imageview_content_description">Movie poster</string>
 </resources>
