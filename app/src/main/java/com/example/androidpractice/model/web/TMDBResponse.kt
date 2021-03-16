@@ -1,5 +1,6 @@
-package com.example.androidpractice.model.entity
+package com.example.androidpractice.model.web
 
+import com.example.androidpractice.model.entity.Movie
 import com.google.gson.annotations.SerializedName
 
 data class TMDBResponse(
