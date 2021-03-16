@@ -1,4 +1,4 @@
-package com.example.androidpractice.model
+package com.example.androidpractice.model.web
 
 import com.example.androidpractice.MovieModel
 import com.example.androidpractice.model.entity.Movie

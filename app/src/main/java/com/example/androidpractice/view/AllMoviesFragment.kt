@@ -11,8 +11,8 @@ import com.example.androidpractice.presenter.AllMoviesPresenter
 import com.example.androidpractice.MoviePresenter
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
-import com.example.androidpractice.model.TMDBModel
-import com.example.androidpractice.model.TMDBService
+import com.example.androidpractice.model.web.TMDBModel
+import com.example.androidpractice.model.web.TMDBService
 import com.example.androidpractice.model.entity.Movie
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

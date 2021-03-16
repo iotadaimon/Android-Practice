@@ -1,4 +1,4 @@
-package com.example.androidpractice.model
+package com.example.androidpractice.model.web
 
 import com.example.androidpractice.model.entity.TMDBResponse
 import retrofit2.Call
