@@ -15,6 +15,7 @@ import com.example.androidpractice.view.LikedMoviesFragment
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -55,6 +56,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         fragmentFrameLayout = findViewById(R.id.fragment_frameLayout)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        toggle.syncState()
 
         if (savedInstanceState == null) {
             // Show the default fragment
@@ -63,17 +69,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        toggle.syncState()
-    }
+    private fun showAllMoviesFragment() =
+        switchFragment(getString(R.string.nav_all_movies), AllMoviesFragment())
 
-    private fun showAllMoviesFragment() = switchFragment(AllMoviesFragment())
+    private fun showLikedMoviesFragment() =
+        switchFragment(getString(R.string.nav_liked_movies), LikedMoviesFragment())
 
-    private fun showLikedMoviesFragment() = switchFragment(LikedMoviesFragment())
-
-    private fun switchFragment(fragment: androidx.fragment.app.Fragment) {
-        drawerLayout.closeDrawers()
+    private fun switchFragment(toolbarTitle: String, fragment: androidx.fragment.app.Fragment) {
+        toolbar.setTitle(toolbarTitle)
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(
@@ -81,5 +84,7 @@ class MainActivity : AppCompatActivity() {
             fragment
         )
         fragmentTransaction.commit()
+
+        drawerLayout.closeDrawers()
     }
 }

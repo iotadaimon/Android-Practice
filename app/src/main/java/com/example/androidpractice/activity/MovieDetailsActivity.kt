@@ -23,8 +23,6 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-        recyclerView = findViewById(R.id.movie_details_recycler_view)
-
         movie = intent.getParcelableExtra(DATA_MOVIE) ?: Movie().also {
             Toast.makeText(
                 this,
@@ -33,9 +31,12 @@ class MovieDetailsActivity : AppCompatActivity() {
             ).show()
         }
 
+        recyclerView = findViewById(R.id.movie_details_recycler_view)
+
         val movieProperties = movie.getMovieProperties()
 
         recyclerView.adapter = MovieDetailsAdapter(movieProperties)
+        supportActionBar?.setTitle(movie.title)
     }
 
     // Extracts and returns a poster and a list of properties from a Movie instance
