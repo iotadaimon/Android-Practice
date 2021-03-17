@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
+import com.example.androidpractice.view.MovieDetailsAdapter
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -32,7 +33,27 @@ class MovieDetailsActivity : AppCompatActivity() {
             ).show()
         }
 
-//        recyclerView.adapter =  // TODO
+        val movieProperties = movie.getMovieProperties()
+
+        recyclerView.adapter = MovieDetailsAdapter(movieProperties)
     }
+
+    // Extracts and returns a poster and a list of properties from a Movie instance
+    private fun Movie.getMovieProperties(): List<Pair<String, Any?>> = listOf<Pair<String, Any?>>(
+        Pair("Adult", movie.adult),
+        Pair("Overview", movie.overview),
+        Pair("Release Date", movie.releaseDate),
+//            Pair("ID", movie.id),
+//            Pair("Genre IDs", movie.genreIDs),
+        Pair("Original Title", movie.originalTitle),
+        Pair("Language", movie.originalLanguage),
+        Pair("Title", movie.title),
+//            Pair("Backdrop Path", movie.backdropPath),
+        Pair("Popularity", movie.popularity),
+        Pair("Vote Vount", movie.voteCount),
+//            Pair("Video", movie.video),
+        Pair("Vote Average", movie.voteAverage)
+    )
+
 
 }
