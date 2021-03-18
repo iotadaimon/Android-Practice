@@ -3,28 +3,26 @@ package com.example.androidpractice.presenter
 import com.example.androidpractice.MovieModel
 import com.example.androidpractice.MoviePresenter
 import com.example.androidpractice.MovieView
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.async
+import kotlinx.coroutines.*
 
 
-class AllMoviesPresenter(private val model: MovieModel, private val view: MovieView) :
-    MoviePresenter {
+class AllMoviesPresenter(
+    private val model: MovieModel,
+    private val view: MovieView,
+    private val coroutineScope: CoroutineScope = GlobalScope
+) : MoviePresenter {
 
-    // TODO - Accept coroutine context as a variable
     override fun presentMovies() {
         view.showProgressIndicator()
 
-        val handler = CoroutineExceptionHandler { _, exception ->
-            view.showErrorToast()
+        val handler = CoroutineExceptionHandler { _, _ ->
             view.hideProgressIndicator()
+            view.showErrorToast()
         }
 
-        GlobalScope.launch(handler) {
+        coroutineScope.launch(handler) {
             launch(Dispatchers.Main) {
-                val movies = GlobalScope.async { model.getMovies() }.await()
+                val movies = coroutineScope.async { model.getMovies() }.await()
 
                 view.hideProgressIndicator()
                 view.showMovies(movies)
