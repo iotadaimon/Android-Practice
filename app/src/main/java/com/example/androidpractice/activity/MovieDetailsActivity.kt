@@ -30,7 +30,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             ).show()
         }
 
-        supportActionBar?.setTitle(movie.title)
+        supportActionBar?.title = movie.title
 
         linearLayout = findViewById(R.id.movie_details_linear_layout)
 

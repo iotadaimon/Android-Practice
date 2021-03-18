@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         switchFragment(getString(R.string.nav_liked_movies), LikedMoviesFragment())
 
     private fun switchFragment(toolbarTitle: String, fragment: androidx.fragment.app.Fragment) {
-        toolbar.setTitle(toolbarTitle)
+        toolbar.title = toolbarTitle
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(
