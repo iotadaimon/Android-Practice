@@ -2,11 +2,10 @@ package com.example.androidpractice.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
-import com.example.androidpractice.view.MovieDetailsAdapter
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -16,7 +15,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var movie: Movie
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var linearLayout: LinearLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,30 +30,46 @@ class MovieDetailsActivity : AppCompatActivity() {
             ).show()
         }
 
-        recyclerView = findViewById(R.id.movie_details_recycler_view)
-
-        val movieProperties = movie.getMovieProperties()
-
-        recyclerView.adapter = MovieDetailsAdapter(movieProperties)
         supportActionBar?.setTitle(movie.title)
+
+        linearLayout = findViewById(R.id.movie_details_linear_layout)
+
+        // TODO - Add poster
+        val posterImageView: ImageView = findViewById(R.id.movie_poster_image_view)
+//         val moviePoster = movie.posterPath
+
+        // Add properties
+        for ((key, value) in movie.getMovieProperties()) {
+            val moviePropertyView =
+                layoutInflater.inflate(R.layout.item_movie_property, null)
+            val propertyNameTextView: TextView =
+                moviePropertyView.findViewById(R.id.movie_property_name_textView)
+            val propertyValueTextView: TextView =
+                moviePropertyView.findViewById(R.id.movie_property_value_textView)
+
+            propertyNameTextView.text = key
+            propertyValueTextView.text = value.toString()
+
+            linearLayout.addView(moviePropertyView)
+        }
+
     }
 
     // Extracts and returns a poster and a list of properties from a Movie instance
-    private fun Movie.getMovieProperties(): List<Pair<String, Any?>> = listOf<Pair<String, Any?>>(
-        Pair("Adult", movie.adult),
-        Pair("Overview", movie.overview),
-        Pair("Release Date", movie.releaseDate),
-//            Pair("ID", movie.id),
-//            Pair("Genre IDs", movie.genreIDs),
-        Pair("Original Title", movie.originalTitle),
-        Pair("Language", movie.originalLanguage),
-        Pair("Title", movie.title),
-//            Pair("Backdrop Path", movie.backdropPath),
-        Pair("Popularity", movie.popularity),
-        Pair("Vote Vount", movie.voteCount),
-//            Pair("Video", movie.video),
-        Pair("Vote Average", movie.voteAverage)
+    private fun Movie.getMovieProperties(): Map<String, Any?> = linkedMapOf<String, Any?>(
+        "Adult" to movie.adult,
+        "Overview" to movie.overview,
+        "Release Date" to movie.releaseDate,
+        "ID" to movie.id,
+        "Genre IDs" to movie.genreIDs,
+        "Original Title" to movie.originalTitle,
+        "Language" to movie.originalLanguage,
+        "Title" to movie.title,
+        "Backdrop Path" to movie.backdropPath,
+        "Popularity" to movie.popularity,
+        "Vote Vount" to movie.voteCount,
+        "Video" to movie.video,
+        "Vote Average" to movie.voteAverage
     )
-
 
 }
