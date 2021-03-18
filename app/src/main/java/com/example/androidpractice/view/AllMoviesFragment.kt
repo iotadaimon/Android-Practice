@@ -16,6 +16,7 @@ import com.example.androidpractice.activity.MovieDetailsActivity
 import com.example.androidpractice.model.web.TMDBModel
 import com.example.androidpractice.model.web.TMDBService
 import com.example.androidpractice.model.entity.Movie
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -23,6 +24,7 @@ class AllMoviesFragment : Fragment(), MovieView {
 
     private lateinit var presenter: MoviePresenter
 
+    private var progressIndicator: LinearProgressIndicator? = null
     private lateinit var recyclerView: RecyclerView
 
 
@@ -35,6 +37,7 @@ class AllMoviesFragment : Fragment(), MovieView {
             .build().create(TMDBService::class.java)
 
         presenter = AllMoviesPresenter(TMDBModel(tmdbService, TMDBModel.API_KEY), this)
+        progressIndicator = activity?.findViewById(R.id.main_activity_progress_indicator)
     }
 
     override fun onCreateView(
@@ -61,6 +64,15 @@ class AllMoviesFragment : Fragment(), MovieView {
         val intent = Intent(context, MovieDetailsActivity::class.java)
         intent.putExtra(MovieDetailsActivity.DATA_MOVIE, movie)
         startActivity(intent)
+    }
+
+    override fun showProgressIndicator() {
+        progressIndicator?.show()
+    }
+
+
+    override fun hideProgressIndicator() {
+        progressIndicator?.hide()
     }
 
     override fun showErrorToast() {
