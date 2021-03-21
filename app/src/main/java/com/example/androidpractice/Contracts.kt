@@ -4,7 +4,7 @@ import com.example.androidpractice.model.entity.Movie
 
 
 interface MovieModel {
-    suspend fun getMovies(): List<Movie>
+    suspend fun getMovies(pageNumber: Int = 1): List<Movie>
 }
 
 interface MutableMovieModel : MovieModel {
@@ -33,7 +33,7 @@ interface MovieView {
 }
 
 interface MoviePresenter {
-    fun presentMovies()
+    fun presentMovies(upToPageNumber: Int = 1)
 }
 
 interface LikedMoviePresenter : MoviePresenter {

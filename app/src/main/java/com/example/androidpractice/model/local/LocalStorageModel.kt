@@ -13,7 +13,7 @@ class LocalStorageModel : MutableMovieModel {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getMovies(): List<Movie> {
+    override suspend fun getMovies(pageNumber: Int): List<Movie> {
         TODO("Not yet implemented")
     }
 
