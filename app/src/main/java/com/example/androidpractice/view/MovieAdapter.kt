@@ -11,7 +11,7 @@ import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 
 
-class MovieAdapter(private val movieList: List<Movie>, private val movieView: MovieView) :
+class MovieAdapter(internal var movieList: List<Movie>, private val movieView: MovieView) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     // Describes an item view and its place within the RecyclerView

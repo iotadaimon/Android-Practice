@@ -7,15 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidpractice.presenter.AllMoviesPresenter
 import com.example.androidpractice.MoviePresenter
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
 import com.example.androidpractice.activity.MovieDetailsActivity
+import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.model.web.TMDBModel
 import com.example.androidpractice.model.web.TMDBService
-import com.example.androidpractice.model.entity.Movie
+import com.example.androidpractice.presenter.AllMoviesPresenter
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +27,7 @@ class AllMoviesFragment : Fragment(), MovieView {
 
     private var progressIndicator: LinearProgressIndicator? = null
     private lateinit var recyclerView: RecyclerView
-
+    private lateinit var recyclerViewAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,16 @@ class AllMoviesFragment : Fragment(), MovieView {
         val view = inflater.inflate(R.layout.fragment_all_movies, container, false)
 
         recyclerView = view.findViewById(R.id.all_movies_recycler_view)
+        recyclerView.adapter = MovieAdapter(mutableListOf(), this)
+        recyclerViewAdapter = recyclerView.adapter as MovieAdapter
+
+        recyclerView.addOnScrollListener(
+            MovieListScrollListener(
+                AllMoviesPresenter.PAGE_SIZE,
+                recyclerView.layoutManager as LinearLayoutManager,
+                presenter
+            )
+        )
 
         return view
     }
@@ -57,7 +68,8 @@ class AllMoviesFragment : Fragment(), MovieView {
     }
 
     override fun showMovies(movies: List<Movie>) {
-        recyclerView.adapter = MovieAdapter(movies, this)
+        recyclerViewAdapter.movieList = movies
+        recyclerViewAdapter.notifyDataSetChanged()
     }
 
     override fun showMovieDetails(movie: Movie) {
@@ -82,4 +94,6 @@ class AllMoviesFragment : Fragment(), MovieView {
             Toast.LENGTH_SHORT
         ).show()
     }
+
 }
+
