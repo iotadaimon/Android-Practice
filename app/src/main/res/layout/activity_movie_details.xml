@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MovieDetailsActivity">
+    tools:context=".view.MovieDetailsActivity">
 
     <ScrollView
         android:id="@+id/movie_details_scroll_view"

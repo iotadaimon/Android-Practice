@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpractice.MoviePresenter
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
-import com.example.androidpractice.activity.MovieDetailsActivity
 import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.model.web.TMDBModel
 import com.example.androidpractice.model.web.TMDBService
