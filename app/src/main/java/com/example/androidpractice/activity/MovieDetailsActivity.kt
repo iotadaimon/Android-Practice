@@ -2,12 +2,13 @@ package com.example.androidpractice.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
+import com.example.androidpractice.MovieDetailsView
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 
-class MovieDetailsActivity : AppCompatActivity() {
+class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
     companion object {
         const val DATA_MOVIE: String = "DATA_MOVIE"
@@ -53,6 +54,14 @@ class MovieDetailsActivity : AppCompatActivity() {
             linearLayout.addView(moviePropertyView)
         }
 
+    }
+
+    fun toggleFavouriteMovie(view: View) {
+        // TODO - call toggleFavouriteMovie with movie data
+    }
+
+    override fun toggleFavouriteMovie(movie: Movie) {
+        TODO("Not yet implemented")
     }
 
     // Extracts and returns a poster and a list of properties from a Movie instance
