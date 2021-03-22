@@ -32,6 +32,10 @@ interface MovieView {
 
 }
 
+interface MovieDetailsView {
+    fun toggleFavouriteMovie(movie: Movie)
+}
+
 interface MoviePresenter {
     fun presentMovies(upToPageNumber: Int = 1)
 }
