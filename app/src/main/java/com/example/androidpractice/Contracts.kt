@@ -1,15 +1,22 @@
 package com.example.androidpractice
 
+import android.graphics.Bitmap
 import com.example.androidpractice.model.entity.Movie
 
 
 interface MovieModel {
+
     suspend fun getMovies(pageNumber: Int = 1): List<Movie>
+
+    suspend fun getMoviesById(id: Int): List<Movie> {
+        TODO("Not yet implemented")
+    }
+
 }
 
 interface MutableMovieModel : MovieModel {
-    fun addMovie(movie: Movie)
-    fun removeMovie(movie: Movie)
+    suspend fun addMovie(movie: Movie)
+    suspend fun removeMovie(movie: Movie)
 }
 
 interface MovieView {
@@ -33,6 +40,7 @@ interface MovieView {
 }
 
 interface MovieDetailsView {
+    fun showMovieDetails(poster: Bitmap, properties: Map<String, Any?>)
     fun toggleFavouriteMovie(movie: Movie)
 }
 
@@ -40,7 +48,9 @@ interface MoviePresenter {
     fun presentMovies(upToPageNumber: Int = 1)
 }
 
-interface MutableMoviePresenter : MoviePresenter {
+interface MovieDetailsPresenter {
+    fun presentMovieDetails(movie: Movie)
     fun addLikedMovie(movie: Movie)
     fun deleteLikedMovie(movie: Movie)
+    fun checkIfFavourite(movie: Movie): Boolean
 }
