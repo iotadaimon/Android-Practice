@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidpractice.Constants
 import com.example.androidpractice.MoviePresenter
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
@@ -36,7 +37,7 @@ class AllMoviesFragment : Fragment(), MovieView {
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(TMDBService::class.java)
 
-        presenter = AllMoviesPresenter(TMDBModel(tmdbService, TMDBModel.API_KEY), this)
+        presenter = AllMoviesPresenter(TMDBModel(tmdbService, Constants.API_KEY), this)
         progressIndicator = activity?.findViewById(R.id.main_activity_progress_indicator)
     }
 
@@ -52,7 +53,7 @@ class AllMoviesFragment : Fragment(), MovieView {
 
         recyclerView.addOnScrollListener(
             MovieListScrollListener(
-                AllMoviesPresenter.PAGE_SIZE,
+                Constants.MOVIE_LIST_PAGE_SIZE,
                 recyclerView.layoutManager as LinearLayoutManager,
                 presenter
             )

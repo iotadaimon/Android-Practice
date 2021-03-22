@@ -14,10 +14,6 @@ class AllMoviesPresenter(
     private val coroutineScope: CoroutineScope = GlobalScope
 ) : MoviePresenter {
 
-    companion object {
-        const val PAGE_SIZE = 20    // Equals the page size of TMDBModel
-    }
-
     private var lastLoadedPageNumber = 0
     private val movies: MutableList<Movie> = mutableListOf()
 
@@ -27,7 +23,8 @@ class AllMoviesPresenter(
 
             if (lastLoadedPageNumber < upToPageNumber) {
                 for (pageNumber in (lastLoadedPageNumber + 1)..upToPageNumber) {
-                    val moviePage = loadMovies(pageNumber).await() // TODO - Throw exception and handle here
+                    val moviePage =
+                        loadMovies(pageNumber).await() // TODO - Throw exception and handle here
                     movies.addAll(moviePage)
                 }
                 lastLoadedPageNumber = upToPageNumber
