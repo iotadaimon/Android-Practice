@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpractice.R
+import com.example.androidpractice.model.local.MovieDatabaseSingleton
 
 // TODO - Use to preload content to MainActivity
 class SplashScreenActivity : AppCompatActivity() {
@@ -18,6 +19,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         // Wait for something to be done and launch MainActivity
         Handler(Looper.getMainLooper()).postDelayed({
+            MovieDatabaseSingleton.prepareDatabase(this)
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }, 2000)
