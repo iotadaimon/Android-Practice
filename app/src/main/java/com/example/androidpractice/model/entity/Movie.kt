@@ -3,67 +3,62 @@ package com.example.androidpractice.model.entity
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-@Entity
+@Entity(tableName = "liked_movies")
 @Parcelize
 data class Movie(
     @ColumnInfo(name = "poster_path")
     @SerializedName("poster_path")
-    val posterPath: String? = null,
+    var posterPath: String? = null,
 
-    @ColumnInfo(name = "adult")
     @SerializedName("adult")
-    val adult: Boolean? = null,
+    var adult: Boolean? = null,
 
-    @ColumnInfo(name = "overview")
     @SerializedName("overview")
-    val overview: String? = null,
+    var overview: String? = null,
 
     @ColumnInfo(name = "release_date")
     @SerializedName("release_date")
-    val releaseDate: String? = null,
+    var releaseDate: String? = null,
 
-    @ColumnInfo(name = "genre_ids")
+    @Ignore
     @SerializedName("genre_ids")
-    val genreIDs: List<Int>? = null,
+    var genreIDs: List<Int>? = null,
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
     @SerializedName("id")
-    val id: Int? = null,
+    var id: Int? = null,
 
     @ColumnInfo(name = "original_title")
     @SerializedName("original_title")
-    val originalTitle: String? = null,
+    var originalTitle: String? = null,
 
     @ColumnInfo(name = "original_language")
     @SerializedName("original_language")
-    val originalLanguage: String? = null,
+    var originalLanguage: String? = null,
 
-    @ColumnInfo(name = "title")
     @SerializedName("title")
-    val title: String? = null,
+    var title: String? = null,
 
     @ColumnInfo(name = "backdrop_path")
     @SerializedName("backdrop_path")
-    val backdropPath: String? = null,
+    var backdropPath: String? = null,
 
-    @ColumnInfo(name = "popularity")
     @SerializedName("popularity")
-    val popularity: Number? = null,
+    var popularity: Float? = null,
 
     @ColumnInfo(name = "vote_count")
     @SerializedName("vote_count")
-    val voteCount: Int? = null,
+    var voteCount: Int? = null,
 
-    @ColumnInfo(name = "video")
     @SerializedName("video")
-    val video: Boolean? = null,
+    var video: Boolean? = null,
 
     @ColumnInfo(name = "vote_average")
     @SerializedName("vote_average")
-    val voteAverage: Number? = null
+    var voteAverage: Float? = null
 ) : Parcelable

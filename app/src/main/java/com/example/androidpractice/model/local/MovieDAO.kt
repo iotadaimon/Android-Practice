@@ -8,10 +8,10 @@ import com.example.androidpractice.model.entity.Movie
 
 @Dao
 interface MovieDAO {
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM liked_movies")
     fun getAll(): List<Movie>
 
-    @Query("SELECT * FROM movie WHERE id IN (:movieIds)")
+    @Query("SELECT * FROM liked_movies WHERE id IN (:movieIds)")
     fun loadAllByIds(movieIds: IntArray): List<Movie>
 
     @Insert
