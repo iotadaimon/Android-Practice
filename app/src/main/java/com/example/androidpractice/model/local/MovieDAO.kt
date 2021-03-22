@@ -11,6 +11,9 @@ interface MovieDAO {
     @Query("SELECT * FROM liked_movies")
     fun getAll(): List<Movie>
 
+    @Query("SELECT * FROM liked_movies WHERE id = (:movieId)")
+    fun loadAllById(movieId: Int): List<Movie>
+
     @Query("SELECT * FROM liked_movies WHERE id IN (:movieIds)")
     fun loadAllByIds(movieIds: IntArray): List<Movie>
 
