@@ -36,7 +36,7 @@ interface MoviePresenter {
     fun presentMovies(upToPageNumber: Int = 1)
 }
 
-interface LikedMoviePresenter : MoviePresenter {
+interface MutableMoviePresenter : MoviePresenter {
     fun addLikedMovie(movie: Movie)
     fun deleteLikedMovie(movie: Movie)
 }
