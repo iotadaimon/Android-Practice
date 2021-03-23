@@ -23,7 +23,7 @@ class MovieDetailsPresenterImpl(
         view.showMovieDetails(poster, movieProperties)
     }
 
-    override fun toggleFavouriteMovie(movie: Movie) =
+    override fun toggleLikedMovie(movie: Movie) =
         if (!checkIfFavourite(movie))
             addLikedMovie(movie) else
             deleteLikedMovie(movie)

@@ -54,7 +54,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
         presenter.presentMovieDetails(movie)
     }
 
-    fun toggleFavouriteMovie(view: View) = toggleFavouriteMovie(movie)
+    fun toggleFavouriteMovie(view: View) = toggleLikedMovie(movie)
 
     override fun showMovieDetails(poster: Bitmap, properties: Map<String, Any?>) {
         supportActionBar?.title = movie.title
@@ -88,6 +88,6 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
         Toast.LENGTH_SHORT
     ).show()
 
-    override fun toggleFavouriteMovie(movie: Movie) = presenter.toggleFavouriteMovie(movie)
+    override fun toggleLikedMovie(movie: Movie) = presenter.toggleLikedMovie(movie)
 
 }
