@@ -41,6 +41,8 @@ interface MovieView {
 
 interface MovieDetailsView {
     fun showMovieDetails(poster: Bitmap, properties: Map<String, Any?>)
+    fun showAddedMovieMessage()
+    fun showDeletedMovieMessage()
     fun toggleFavouriteMovie(movie: Movie)
 }
 
@@ -50,7 +52,5 @@ interface MoviePresenter {
 
 interface MovieDetailsPresenter {
     fun presentMovieDetails(movie: Movie)
-    fun addLikedMovie(movie: Movie)
-    fun deleteLikedMovie(movie: Movie)
-    fun checkIfFavourite(movie: Movie): Boolean
+    fun toggleFavouriteMovie(movie: Movie)
 }

@@ -23,21 +23,26 @@ class MovieDetailsPresenterImpl(
         view.showMovieDetails(poster, movieProperties)
     }
 
-    override fun addLikedMovie(movie: Movie) {
-        coroutineScope.launch(Dispatchers.IO) { model.addMovie(movie) }
-    }
-
-    override fun deleteLikedMovie(movie: Movie) {
-        coroutineScope.launch(Dispatchers.IO) { model.removeMovie(movie) }
-    }
+    override fun toggleFavouriteMovie(movie: Movie) =
+        if (!checkIfFavourite(movie))
+            addLikedMovie(movie) else
+            deleteLikedMovie(movie)
 
     // TODO - use coroutines
-    override fun checkIfFavourite(movie: Movie): Boolean {
+    private fun checkIfFavourite(movie: Movie): Boolean {
         return runBlocking {
             coroutineScope.async(Dispatchers.IO) {
                 model.getMoviesById(movie.id ?: -1).isNotEmpty()
             }.await()
         }
+    }
+
+    private fun addLikedMovie(movie: Movie) {
+        coroutineScope.launch(Dispatchers.IO) { model.addMovie(movie) }
+    }
+
+    private fun deleteLikedMovie(movie: Movie) {
+        coroutineScope.launch(Dispatchers.IO) { model.removeMovie(movie) }
     }
 
     // Extracts and returns a poster and a list of properties from a Movie instance

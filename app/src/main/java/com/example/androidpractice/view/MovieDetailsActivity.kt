@@ -75,23 +75,19 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
         }
     }
 
-    // TODO - notify user properly
-    override fun toggleFavouriteMovie(movie: Movie) {
-        if (presenter.checkIfFavourite(movie)) {
-            presenter.deleteLikedMovie(movie)
-            Toast.makeText(
-                this,
-                "Deleted liked movie",
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            presenter.addLikedMovie(movie)
-            Toast.makeText(
-                this,
-                "Added liked movie",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
+    // TODO - change floating button icon on toggle
+    override fun showAddedMovieMessage() = Toast.makeText(
+        this,
+        "Deleted liked movie",
+        Toast.LENGTH_SHORT
+    ).show()
+
+    override fun showDeletedMovieMessage() = Toast.makeText(
+        this,
+        "Added liked movie",
+        Toast.LENGTH_SHORT
+    ).show()
+
+    override fun toggleFavouriteMovie(movie: Movie) = presenter.toggleFavouriteMovie(movie)
 
 }
