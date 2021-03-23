@@ -23,18 +23,24 @@ class MovieDetailsPresenterImpl(
         view.showMovieDetails(poster, movieProperties)
     }
 
-    override fun toggleLikedMovie(movie: Movie) =
-        if (!checkIfFavourite(movie))
-            addLikedMovie(movie) else
+    override fun toggleLikedMovie(movie: Movie) = when (checkIfLiked(movie)) {
+        true -> {
             deleteLikedMovie(movie)
+            view.showDeletedMovieMessage()
+        }
+        false -> {
+            addLikedMovie(movie)
+            view.showAddedMovieMessage()
+        }
+    }
 
-    // TODO - use coroutines
-    private fun checkIfFavourite(movie: Movie): Boolean {
+    // TODO - use coroutines better
+    override fun checkIfLiked(movie: Movie): Boolean {
         return runBlocking {
             coroutineScope.async(Dispatchers.IO) {
-                model.getMoviesById(movie.id ?: -1).isNotEmpty()
+                model.getMoviesById(movie.id ?: -1)
             }.await()
-        }
+        }.isNotEmpty()
     }
 
     private fun addLikedMovie(movie: Movie) {

@@ -53,4 +53,5 @@ interface MoviePresenter {
 interface MovieDetailsPresenter {
     fun presentMovieDetails(movie: Movie)
     fun toggleLikedMovie(movie: Movie)
+    fun checkIfLiked(movie: Movie): Boolean
 }

@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@color/yellow_500"
+        app:backgroundTint="@color/yellow_500"
         android:onClick="toggleFavouriteMovie"
         app:srcCompat="@drawable/ic_baseline_liked_border_24" />
 

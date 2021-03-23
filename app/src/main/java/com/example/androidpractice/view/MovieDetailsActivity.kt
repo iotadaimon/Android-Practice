@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.androidpractice.MovieDetailsPresenter
 import com.example.androidpractice.MovieDetailsView
 import com.example.androidpractice.R
@@ -15,6 +16,7 @@ import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.model.local.LocalStorageModel
 import com.example.androidpractice.model.local.MovieDatabaseSingleton
 import com.example.androidpractice.presenter.MovieDetailsPresenterImpl
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
@@ -24,6 +26,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
     private lateinit var posterImageView: ImageView
     private lateinit var linearLayout: LinearLayout
+    private lateinit var floatingActionButton: FloatingActionButton
 
     private lateinit var movie: Movie
 
@@ -36,6 +39,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
         linearLayout = findViewById(R.id.movie_details_linear_layout)
         posterImageView = findViewById(R.id.movie_poster_image_view)
+        floatingActionButton = findViewById(R.id.fab)
 
         movie = intent.getParcelableExtra(DATA_MOVIE) ?: Movie().also {
             Toast.makeText(
@@ -52,6 +56,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
         )
 
         presenter.presentMovieDetails(movie)
+        updateFabIcon()
     }
 
     fun toggleFavouriteMovie(view: View) = toggleLikedMovie(movie)
@@ -75,14 +80,37 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
         }
     }
 
-    // TODO - change floating button icon on toggle
-    override fun showAddedMovieMessage() =
+    override fun showAddedMovieMessage() {
         makeToast(resources.getString(R.string.liked_movie_added)).show()
+        updateFabIcon()
+    }
 
-    override fun showDeletedMovieMessage() =
+    override fun showDeletedMovieMessage() {
         makeToast(resources.getString(R.string.liked_movie_removed)).show()
+        setFabDrawable(R.drawable.ic_baseline_liked_border_24)
+    }
 
-    override fun toggleLikedMovie(movie: Movie) = presenter.toggleLikedMovie(movie)
+    override fun toggleLikedMovie(movie: Movie) {
+        presenter.toggleLikedMovie(movie)
+        setFabDrawable(R.drawable.ic_baseline_liked_24)
+    }
+
+    private fun updateFabIcon() {
+        val drawableResId: Int = when (presenter.checkIfLiked(movie)) {
+            true -> R.drawable.ic_baseline_liked_24
+            false -> R.drawable.ic_baseline_liked_border_24
+        }
+
+        setFabDrawable(drawableResId)
+    }
+
+    private fun setFabDrawable(drawableResId: Int) = floatingActionButton.setImageDrawable(
+        ContextCompat.getDrawable(
+            this,
+            drawableResId
+        )
+    )
+
 
     private fun makeToast(message: String) = Toast.makeText(
         this,
