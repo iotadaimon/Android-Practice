@@ -10,6 +10,7 @@ import com.example.androidpractice.R
 import com.example.androidpractice.model.local.MovieDatabaseSingleton
 
 class SplashScreenActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
@@ -23,4 +24,5 @@ class SplashScreenActivity : AppCompatActivity() {
             finish()
         }, 2000)
     }
+
 }

@@ -8,6 +8,7 @@ import com.example.androidpractice.model.entity.Movie
 
 @Dao
 interface MovieDAO {
+
     @Query("SELECT * FROM liked_movies")
     fun getAll(): List<Movie>
 
@@ -22,4 +23,5 @@ interface MovieDAO {
 
     @Delete
     fun delete(movie: Movie)
+
 }

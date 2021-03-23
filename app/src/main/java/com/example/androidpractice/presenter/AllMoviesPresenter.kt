@@ -7,7 +7,6 @@ import com.example.androidpractice.model.entity.Movie
 import kotlinx.coroutines.*
 import java.io.IOException
 
-
 class AllMoviesPresenter(
     private val model: MovieModel,
     private val view: MovieView,

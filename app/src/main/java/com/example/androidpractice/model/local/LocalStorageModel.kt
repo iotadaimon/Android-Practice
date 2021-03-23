@@ -13,7 +13,7 @@ class LocalStorageModel(private val movieDAO: MovieDAO) : MutableMovieModel {
     override suspend fun removeMovie(movie: Movie) = movieDAO.delete(movie)
 
     override suspend fun getMovies(pageNumber: Int): List<Movie> {
-        if (moviesToServe.isEmpty()) moviesToServe.addAll(movieDAO.getAll())
+        if (moviesToServe.isEmpty()) moviesToServe.addAll(movieDAO.getAll()) // TODO - Load only required pages
 
         val startIndex = (pageNumber - 1) * Constants.MOVIE_LIST_PAGE_SIZE
         val endIndex = pageNumber * Constants.MOVIE_LIST_PAGE_SIZE - 1

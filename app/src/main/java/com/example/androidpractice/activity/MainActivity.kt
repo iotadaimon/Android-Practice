@@ -12,7 +12,6 @@ import com.example.androidpractice.R
 import com.example.androidpractice.view.AllMoviesFragment
 import com.example.androidpractice.view.LikedMoviesFragment
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
@@ -20,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
     private lateinit var fragmentFrameLayout: FrameLayout
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,4 +85,5 @@ class MainActivity : AppCompatActivity() {
 
         drawerLayout.closeDrawers()
     }
+
 }

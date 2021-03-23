@@ -3,7 +3,6 @@ package com.example.androidpractice
 import android.graphics.Bitmap
 import com.example.androidpractice.model.entity.Movie
 
-
 interface MovieModel {
 
     suspend fun getMovies(pageNumber: Int = 1): List<Movie>

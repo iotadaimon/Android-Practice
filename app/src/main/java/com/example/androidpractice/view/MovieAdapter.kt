@@ -10,7 +10,6 @@ import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 
-
 class MovieAdapter(internal var movieList: List<Movie>, private val movieView: MovieView) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
