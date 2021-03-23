@@ -62,7 +62,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
         // Add properties
         for ((key, value) in properties) {
             val moviePropertyView =
-                layoutInflater.inflate(R.layout.item_movie_property, null)
+                layoutInflater.inflate(R.layout.recyclerview_item_movie_property, null)
             val propertyNameTextView: TextView =
                 moviePropertyView.findViewById(R.id.movie_property_name_textView)
             val propertyValueTextView: TextView =
