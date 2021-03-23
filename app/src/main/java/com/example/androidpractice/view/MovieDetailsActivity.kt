@@ -82,7 +82,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
     override fun showAddedMovieMessage() {
         makeToast(resources.getString(R.string.liked_movie_added)).show()
-        updateFabIcon()
+        setFabDrawable(R.drawable.ic_baseline_liked_24)
     }
 
     override fun showDeletedMovieMessage() {
@@ -90,10 +90,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
         setFabDrawable(R.drawable.ic_baseline_liked_border_24)
     }
 
-    override fun toggleLikedMovie(movie: Movie) {
-        presenter.toggleLikedMovie(movie)
-        setFabDrawable(R.drawable.ic_baseline_liked_24)
-    }
+    override fun toggleLikedMovie(movie: Movie) = presenter.toggleLikedMovie(movie)
 
     private fun updateFabIcon() {
         val drawableResId: Int = when (presenter.checkIfLiked(movie)) {
