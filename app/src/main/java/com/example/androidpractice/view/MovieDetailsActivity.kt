@@ -76,18 +76,18 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
     }
 
     // TODO - change floating button icon on toggle
-    override fun showAddedMovieMessage() = Toast.makeText(
-        this,
-        "Deleted liked movie",
-        Toast.LENGTH_SHORT
-    ).show()
+    override fun showAddedMovieMessage() =
+        makeToast(resources.getString(R.string.liked_movie_added)).show()
 
-    override fun showDeletedMovieMessage() = Toast.makeText(
-        this,
-        "Added liked movie",
-        Toast.LENGTH_SHORT
-    ).show()
+    override fun showDeletedMovieMessage() =
+        makeToast(resources.getString(R.string.liked_movie_removed)).show()
 
     override fun toggleLikedMovie(movie: Movie) = presenter.toggleLikedMovie(movie)
+
+    private fun makeToast(message: String) = Toast.makeText(
+        this,
+        message,
+        Toast.LENGTH_SHORT
+    )
 
 }

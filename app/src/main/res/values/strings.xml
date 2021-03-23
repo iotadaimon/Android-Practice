@@ -30,4 +30,8 @@
     <string name="movie_poster_imageView_content_description">Movie poster</string>
     <string name="movie_property_textView_description_property_value">Property value</string>
     <string name="movie_property_textView_description_property_name">Property name</string>
+
+    <!-- Toasts in MovieDetailsActivity -->
+    <string name="liked_movie_added">Add liked movie</string>
+    <string name="liked_movie_removed">Deleted liked movie</string>
 </resources>
