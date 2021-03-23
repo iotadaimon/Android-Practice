@@ -4,7 +4,6 @@ import com.example.androidpractice.Constants
 import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.model.entity.Movie
 
-// TODO - separate into read only and write only models
 class LocalStorageModel(private val movieDAO: MovieDAO) : MutableMovieModel {
 
     private val moviesToServe: MutableList<Movie> = mutableListOf()

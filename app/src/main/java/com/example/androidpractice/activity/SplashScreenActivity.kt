@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpractice.R
 import com.example.androidpractice.model.local.MovieDatabaseSingleton
 
-// TODO - Use to preload content to MainActivity
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
