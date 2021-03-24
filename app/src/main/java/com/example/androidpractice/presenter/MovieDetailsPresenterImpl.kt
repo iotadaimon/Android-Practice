@@ -5,13 +5,20 @@ import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.MovieDetailsPresenter
 import com.example.androidpractice.MovieDetailsView
 import com.example.androidpractice.model.entity.Movie
+import com.example.androidpractice.model.local.LocalStorageModel
+import com.example.androidpractice.model.local.MovieDatabaseSingleton
 import kotlinx.coroutines.*
 
 class MovieDetailsPresenterImpl(
-    private val model: MutableMovieModel,
+    private val model: MutableMovieModel = defaultModel,
     private val view: MovieDetailsView,
     private val coroutineScope: CoroutineScope = GlobalScope
 ) : MovieDetailsPresenter {
+
+    private companion object {
+        val defaultModel: MutableMovieModel
+            get() = LocalStorageModel(MovieDatabaseSingleton.movieDAO)
+    }
 
     override fun presentMovieDetails(movie: Movie) {
         val poster = Bitmap.createBitmap(
@@ -51,8 +58,8 @@ class MovieDetailsPresenterImpl(
         coroutineScope.launch(Dispatchers.IO) { model.removeMovie(movie) }
     }
 
-    // Extracts and returns a poster and a list of properties from a Movie instance
-    private fun Movie.getMovieProperties(): Map<String, Any?> = linkedMapOf<String, Any?>(
+    // Extracts and returns a list of properties from a Movie instance
+    private fun Movie.getMovieProperties(): Map<String, Any?> = linkedMapOf(
         "Adult" to this.adult,
         "Overview" to this.overview,
         "Release Date" to this.releaseDate,

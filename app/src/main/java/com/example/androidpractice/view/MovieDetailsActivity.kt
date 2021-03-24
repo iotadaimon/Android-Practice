@@ -32,7 +32,6 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
     private lateinit var presenter: MovieDetailsPresenter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
@@ -50,11 +49,11 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
             finish()
         }
 
-        presenter = MovieDetailsPresenterImpl(
-            LocalStorageModel(MovieDatabaseSingleton.movieDAO),
-            this
-        )
+        presenter = MovieDetailsPresenterImpl(view = this)
+    }
 
+    override fun onStart() {
+        super.onStart()
         presenter.presentMovieDetails(movie)
         updateFabIcon()
     }
