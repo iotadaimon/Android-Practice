@@ -1,12 +1,11 @@
 package com.example.androidpractice.view
 
 import android.os.Bundle
-import android.widget.Toast
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
 import com.example.androidpractice.presenter.LikedMoviesPresenter
 
-class LikedMoviesFragment : MovieListFragment(), MovieView {
+class LikedMoviesFragment : AbstractMovieListFragment(), MovieView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,12 +17,6 @@ class LikedMoviesFragment : MovieListFragment(), MovieView {
         presenter.presentMovies(refresh = true)
     }
 
-    override fun showErrorToast() {
-        Toast.makeText(
-            context,
-            resources.getText(R.string.local_database_error_message),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
+    override fun showErrorToast() = showToast(getString(R.string.local_database_error_message))
 
 }
