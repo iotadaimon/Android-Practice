@@ -7,6 +7,8 @@ import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.model.local.LocalStorageModel
 import com.example.androidpractice.model.local.MovieDatabaseSingleton
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.io.IOException
 
 class LikedMoviesPresenter(
@@ -20,20 +22,26 @@ class LikedMoviesPresenter(
             get() = LocalStorageModel(MovieDatabaseSingleton.movieDAO)
     }
 
-    private var lastLoadedPageNumber = 0
-    private val movies: MutableList<Movie> = mutableListOf()
+    private val mutex: Mutex = Mutex()
 
-    override fun presentMovies(upToPageNumber: Int) {
+    private var lastLoadedPageNumber = 0
+    private var movies: MutableList<Movie> = mutableListOf()
+
+    override fun presentMovies(upToPageNumber: Int, refresh: Boolean) {
         coroutineScope.launch(Dispatchers.Main) {
             view.showProgressIndicator()
 
-            if (lastLoadedPageNumber < upToPageNumber) {
-                for (pageNumber in (lastLoadedPageNumber + 1)..upToPageNumber) {
-                    val moviePage =
-                        loadMovies(pageNumber).await() // TODO - Throw exception and handle here
-                    movies.addAll(moviePage)
+            mutex.withLock {
+                if (refresh) clearCache()
+
+                if (lastLoadedPageNumber < upToPageNumber) {
+                    for (pageNumber in (lastLoadedPageNumber + 1)..upToPageNumber) {
+                        val moviePage =
+                            loadMovies(pageNumber).await() // TODO - Throw exception and handle here
+                        movies.addAll(moviePage)
+                    }
+                    lastLoadedPageNumber = upToPageNumber
                 }
-                lastLoadedPageNumber = upToPageNumber
             }
 
             view.hideProgressIndicator()
@@ -56,5 +64,10 @@ class LikedMoviesPresenter(
 
             movies
         }
+
+    private fun clearCache() {
+        lastLoadedPageNumber = 0
+        movies = mutableListOf()
+    }
 
 }

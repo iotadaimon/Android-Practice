@@ -8,6 +8,8 @@ import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.model.web.TMDBModel
 import com.example.androidpractice.model.web.TMDBService
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
@@ -30,21 +32,26 @@ class AllMoviesPresenter(
             }
     }
 
+    private val mutex: Mutex = Mutex()
+
     private var lastLoadedPageNumber = 0
-    private val movies: MutableList<Movie> = mutableListOf()
+    private var movies: MutableList<Movie> = mutableListOf()
 
-
-    override fun presentMovies(upToPageNumber: Int) {
+    override fun presentMovies(upToPageNumber: Int, refresh: Boolean) {
         coroutineScope.launch(Dispatchers.Main) {
             view.showProgressIndicator()
 
-            if (lastLoadedPageNumber < upToPageNumber) {
-                for (pageNumber in (lastLoadedPageNumber + 1)..upToPageNumber) {
-                    val moviePage =
-                        loadMovies(pageNumber).await() // TODO - Throw exception and handle here
-                    movies.addAll(moviePage)
+            mutex.withLock {
+                if (refresh) clearCache()
+
+                if (lastLoadedPageNumber < upToPageNumber) {
+                    for (pageNumber in (lastLoadedPageNumber + 1)..upToPageNumber) {
+                        val moviePage =
+                            loadMovies(pageNumber).await() // TODO - Throw exception and handle here
+                        movies.addAll(moviePage)
+                    }
+                    lastLoadedPageNumber = upToPageNumber
                 }
-                lastLoadedPageNumber = upToPageNumber
             }
 
             view.hideProgressIndicator()
@@ -67,5 +74,10 @@ class AllMoviesPresenter(
 
             movies
         }
+
+    private fun clearCache() {
+        lastLoadedPageNumber = 0
+        movies = mutableListOf()
+    }
 
 }

@@ -46,7 +46,7 @@ interface MovieDetailsView {
 }
 
 interface MoviePresenter {
-    fun presentMovies(upToPageNumber: Int = 1)
+    fun presentMovies(upToPageNumber: Int = 1, refresh: Boolean = false)
 }
 
 interface MovieDetailsPresenter {
