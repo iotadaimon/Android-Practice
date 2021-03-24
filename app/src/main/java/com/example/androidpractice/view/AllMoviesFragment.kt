@@ -2,20 +2,20 @@ package com.example.androidpractice.view
 
 import android.os.Bundle
 import android.widget.Toast
-import com.example.androidpractice.Constants
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.R
-import com.example.androidpractice.model.web.TMDBModel
-import com.example.androidpractice.model.web.TMDBService
 import com.example.androidpractice.presenter.AllMoviesPresenter
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class AllMoviesFragment : MovieListFragment(), MovieView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = AllMoviesPresenter(view = this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.presentMovies()
     }
 
     override fun showErrorToast() {

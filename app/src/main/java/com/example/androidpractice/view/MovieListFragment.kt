@@ -47,10 +47,6 @@ abstract class MovieListFragment : Fragment(),
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.presentMovies()
-    }
 
     override fun showMovies(movies: List<Movie>) {
         recyclerViewAdapter.movieList = movies
