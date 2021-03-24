@@ -15,13 +15,7 @@ class AllMoviesFragment : MovieListFragment(), MovieView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val tmdbService = Retrofit.Builder()
-            .baseUrl(TMDBService.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build().create(TMDBService::class.java)
-
-        presenter = AllMoviesPresenter(TMDBModel(tmdbService, Constants.API_KEY), this)
+        presenter = AllMoviesPresenter(view = this)
     }
 
     override fun showErrorToast() {

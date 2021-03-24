@@ -4,14 +4,21 @@ import com.example.androidpractice.MovieModel
 import com.example.androidpractice.MoviePresenter
 import com.example.androidpractice.MovieView
 import com.example.androidpractice.model.entity.Movie
+import com.example.androidpractice.model.local.LocalStorageModel
+import com.example.androidpractice.model.local.MovieDatabaseSingleton
 import kotlinx.coroutines.*
 import java.io.IOException
 
 class LikedMoviesPresenter(
-    private val model: MovieModel,
+    private val model: MovieModel = defaultModel,
     private val view: MovieView,
     private val coroutineScope: CoroutineScope = GlobalScope
 ) : MoviePresenter {
+
+    private companion object {
+        val defaultModel: MovieModel
+            get() = LocalStorageModel(MovieDatabaseSingleton.movieDAO)
+    }
 
     private var lastLoadedPageNumber = 0
     private val movies: MutableList<Movie> = mutableListOf()

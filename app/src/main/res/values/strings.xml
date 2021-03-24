@@ -4,6 +4,7 @@
 
     <!-- Errors -->
     <string name="tmdb_api_response_error_message">Error while retrieving data from TMDB</string>
+    <string name="local_database_error_message">Error while retrieving data from the local database</string>
     <string name="movie_details_error_message">Error while retrieving movie details</string>
 
     <!-- Navigation drawer open/close content description -->

@@ -12,13 +12,13 @@ class LikedMoviesFragment : MovieListFragment(), MovieView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = LikedMoviesPresenter(LocalStorageModel(MovieDatabaseSingleton.movieDAO), this)
+        presenter = LikedMoviesPresenter(view = this)
     }
 
     override fun showErrorToast() {
         Toast.makeText(
             context,
-            resources.getText(R.string.tmdb_api_response_error_message),
+            resources.getText(R.string.local_database_error_message),
             Toast.LENGTH_SHORT
         ).show()
     }
