@@ -13,7 +13,10 @@ import androidx.appcompat.widget.Toolbar
 import com.example.androidpractice.R
 import com.example.androidpractice.view.AllMoviesFragment
 import com.example.androidpractice.view.LikedMoviesFragment
+import com.google.android.gms.auth.api.Auth
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
@@ -55,8 +58,7 @@ class MainActivity : AppCompatActivity() {
         val drawerHeaderEmailTextView: TextView =
             navigationHeader.findViewById(R.id.drawer_header_email_textView)
 
-        val firebaseUser: FirebaseUser? =
-            intent.getParcelableExtra(SplashScreenActivity.FIREBASE_ACCOUNT_DATA)
+        val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
         // Load user photo
         val photoUrl = firebaseUser?.photoUrl
@@ -69,9 +71,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_all_movies -> showAllMoviesFragment()
                 R.id.nav_liked_movies -> showLikedMoviesFragment()
-                R.id.nav_logout -> Toast
-                    .makeText(this, "Not implemented", Toast.LENGTH_SHORT)
-                    .show()
+                R.id.nav_logout -> logout()
             }
             true
         }
@@ -95,6 +95,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun showLikedMoviesFragment() =
         switchFragment(getString(R.string.nav_liked_movies), LikedMoviesFragment())
+
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        finish()
+    }
 
     private fun switchFragment(toolbarTitle: String, fragment: androidx.fragment.app.Fragment) {
         toolbar.title = toolbarTitle

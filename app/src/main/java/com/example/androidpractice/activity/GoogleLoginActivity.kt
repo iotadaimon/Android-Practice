@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpractice.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -23,6 +24,8 @@ class GoogleLoginActivity : AppCompatActivity() {
         private const val RC_SIGN_IN = 9001
     }
 
+    private lateinit var signInButton: SignInButton
+
     private lateinit var googleSignInClient: GoogleSignInClient
 
     private lateinit var auth: FirebaseAuth
@@ -31,7 +34,7 @@ class GoogleLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_login)
 
-        findViewById<SignInButton>(R.id.sign_in_button).setOnClickListener { _ -> signIn() }
+        signInButton = findViewById(R.id.sign_in_button)
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -42,6 +45,8 @@ class GoogleLoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         auth = Firebase.auth
+
+        signInButton.setOnClickListener { signIn() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -67,18 +72,15 @@ class GoogleLoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
+                    // Sign in success
                     Log.d(TAG, "signInWithCredential:success")
-                    val firebaseUser = auth.currentUser
-
-                    val resultIntent = Intent()
-                    resultIntent.putExtra(SplashScreenActivity.FIREBASE_ACCOUNT_DATA, firebaseUser)
-                    setResult(Activity.RESULT_OK, resultIntent)
-
+                    setResult(Activity.RESULT_OK)
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(this, "Error while signing to Firebase", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
     }
