@@ -2,6 +2,8 @@ package com.example.androidpractice.activity
 
 import android.os.Bundle
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.navigation.NavigationView
@@ -11,6 +13,8 @@ import androidx.appcompat.widget.Toolbar
 import com.example.androidpractice.R
 import com.example.androidpractice.view.AllMoviesFragment
 import com.example.androidpractice.view.LikedMoviesFragment
+import com.google.firebase.auth.FirebaseUser
+import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +46,25 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
 
         navigationView = findViewById(R.id.navigation_view)
+
+        val navigationHeader = navigationView.getHeaderView(0)
+        val drawerHeaderImageView: ImageView =
+            navigationHeader.findViewById(R.id.drawer_header_imageView)
+        val drawerHeaderNameTextView: TextView =
+            navigationHeader.findViewById(R.id.drawer_header_name_textView)
+        val drawerHeaderEmailTextView: TextView =
+            navigationHeader.findViewById(R.id.drawer_header_email_textView)
+
+        val firebaseUser: FirebaseUser? =
+            intent.getParcelableExtra(SplashScreenActivity.FIREBASE_ACCOUNT_DATA)
+
+        // Load user photo
+        val photoUrl = firebaseUser?.photoUrl
+        if (photoUrl != null) Picasso.get().load(photoUrl).into(drawerHeaderImageView)
+
+        drawerHeaderNameTextView.text = firebaseUser?.displayName
+        drawerHeaderEmailTextView.text = firebaseUser?.email
+
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_all_movies -> showAllMoviesFragment()
