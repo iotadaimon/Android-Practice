@@ -13,8 +13,6 @@ import com.example.androidpractice.MovieDetailsPresenter
 import com.example.androidpractice.MovieDetailsView
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
-import com.example.androidpractice.model.local.LocalStorageModel
-import com.example.androidpractice.model.local.MovieDatabaseSingleton
 import com.example.androidpractice.presenter.MovieDetailsPresenterImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -60,8 +58,10 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
     fun toggleFavouriteMovie(view: View) = toggleLikedMovie(movie)
 
-    override fun showMovieDetails(poster: Bitmap, properties: Map<String, Any?>) {
+    override fun showMovieDetails(posterBitmap: Bitmap, properties: Map<String, Any?>) {
         supportActionBar?.title = movie.title
+
+        posterImageView.setImageBitmap(posterBitmap)
 
         // Add properties
         for ((key, value) in properties) {

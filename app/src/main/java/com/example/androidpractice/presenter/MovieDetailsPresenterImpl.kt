@@ -21,11 +21,9 @@ class MovieDetailsPresenterImpl(
     }
 
     override fun presentMovieDetails(movie: Movie) {
-        val poster = Bitmap.createBitmap(
-            10,
-            10,
-            Bitmap.Config.ALPHA_8
-        ) // TODO - dummy bitmap, get actual poster
+        val poster: Bitmap =
+            Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8)// TODO - get image from storage
+
         val movieProperties = movie.getMovieProperties()
         view.showMovieDetails(poster, movieProperties)
     }

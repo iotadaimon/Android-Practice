@@ -4,7 +4,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-// TODO - Declare overloaded methods for Java interoperability
 interface TMDBService {
 
     companion object {

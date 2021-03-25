@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/movie_poster_imageView_content_description"
+                android:maxHeight="500dp"
                 android:src="@mipmap/ic_launcher" />
 
             <!-- Add items dynamically -->
@@ -37,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/yellow_500"
         android:onClick="toggleFavouriteMovie"
+        app:backgroundTint="@color/yellow_500"
         app:srcCompat="@drawable/ic_baseline_liked_border_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

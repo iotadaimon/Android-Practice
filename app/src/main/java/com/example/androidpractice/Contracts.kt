@@ -11,6 +11,10 @@ interface MovieModel {
         TODO("Not yet implemented")
     }
 
+    suspend fun getMoviePoster(movie: Movie): Bitmap {
+        TODO("Not yet implemented")
+    }
+
 }
 
 interface MutableMovieModel : MovieModel {
