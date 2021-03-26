@@ -15,6 +15,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "SplashScreenActivity"
+        private const val SPLASH_SCREEN_DELAY_MS = 2000L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,27 +26,40 @@ class SplashScreenActivity : AppCompatActivity() {
 
         MovieDatabaseSingleton.prepareDatabase(this)
 
+        // Run with a delay
         Handler(Looper.getMainLooper()).postDelayed({
-            if (FirebaseAuth.getInstance().currentUser == null) {
-                Log.d(TAG, "Firebase user is null, starting the sign-in activity")
-                val intent = Intent(this, GoogleLoginActivity::class.java)
-                startActivityForResult(intent, 0)
-            } else {
-                Log.d(TAG, "Launching app with firebase user credentials")
-                launchApp()
+            // Check if user is logged into Firebase
+            when (FirebaseAuth.getInstance().currentUser) {
+                null -> launchGoogleSignInctivity().also {
+                    Log.d(
+                        TAG,
+                        "Firebase user is null, starting the sign-in activity"
+                    )
+                }
+                else -> launchMainActivity().also {
+                    Log.d(
+                        TAG,
+                        "Launching app with firebase user credentials"
+                    )
+                }
             }
-        }, 2000)
+        }, SPLASH_SCREEN_DELAY_MS)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == RESULT_OK) {
-            launchApp()
+            launchMainActivity()
         }
     }
 
-    private fun launchApp() {
+    private fun launchGoogleSignInctivity() {
+        val intent = Intent(this, GoogleLoginActivity::class.java)
+        startActivityForResult(intent, 0)
+    }
+
+    private fun launchMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
