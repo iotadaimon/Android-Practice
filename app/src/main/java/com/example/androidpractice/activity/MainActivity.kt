@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.navigation.NavigationView
 import androidx.drawerlayout.widget.DrawerLayout
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
     private lateinit var fragmentFrameLayout: FrameLayout
+
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,22 +51,10 @@ class MainActivity : AppCompatActivity() {
 
         navigationView = findViewById(R.id.navigation_view)
 
-        val navigationHeader = navigationView.getHeaderView(0)
-        val drawerHeaderImageView: ImageView =
-            navigationHeader.findViewById(R.id.drawer_header_imageView)
-        val drawerHeaderNameTextView: TextView =
-            navigationHeader.findViewById(R.id.drawer_header_name_textView)
-        val drawerHeaderEmailTextView: TextView =
-            navigationHeader.findViewById(R.id.drawer_header_email_textView)
+        firebaseAuth = FirebaseAuth.getInstance()
+        val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
 
-        val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-
-        // Load user photo
-        val photoUrl = firebaseUser?.photoUrl
-        if (photoUrl != null) Picasso.get().load(photoUrl).into(drawerHeaderImageView)
-
-        drawerHeaderNameTextView.text = firebaseUser?.displayName
-        drawerHeaderEmailTextView.text = firebaseUser?.email
+        initDrawerHeaderWithUserData(firebaseUser)
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -75,6 +66,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         fragmentFrameLayout = findViewById(R.id.fragment_frameLayout)
+    }
+
+    private fun initDrawerHeaderWithUserData(firebaseUser: FirebaseUser?) {
+        val navigationHeader = navigationView.getHeaderView(0)
+        val drawerHeaderImageView: ImageView =
+            navigationHeader.findViewById(R.id.drawer_header_imageView)
+        val drawerHeaderNameTextView: TextView =
+            navigationHeader.findViewById(R.id.drawer_header_name_textView)
+        val drawerHeaderEmailTextView: TextView =
+            navigationHeader.findViewById(R.id.drawer_header_email_textView)
+
+        // Load user photo
+        val photoUrl = firebaseUser?.photoUrl
+        if (photoUrl != null) Picasso.get().load(photoUrl).into(drawerHeaderImageView)
+
+        drawerHeaderNameTextView.text = firebaseUser?.displayName
+        drawerHeaderEmailTextView.text = firebaseUser?.email
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -94,11 +102,6 @@ class MainActivity : AppCompatActivity() {
     private fun showLikedMoviesFragment() =
         switchFragment(getString(R.string.nav_liked_movies), LikedMoviesFragment())
 
-    private fun logout() {
-        FirebaseAuth.getInstance().signOut()
-        finish()
-    }
-
     private fun switchFragment(toolbarTitle: String, fragment: androidx.fragment.app.Fragment) {
         toolbar.title = toolbarTitle
 
@@ -107,6 +110,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         drawerLayout.closeDrawers()
+    }
+
+    private fun logout() {
+        firebaseAuth.signOut()
+        Toast.makeText(this, "Restart the app to log in with a different user", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
 }
