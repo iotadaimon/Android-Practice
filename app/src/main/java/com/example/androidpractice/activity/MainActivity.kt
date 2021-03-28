@@ -4,19 +4,17 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.navigation.NavigationView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.commit
 import com.example.androidpractice.R
 import com.example.androidpractice.view.AllMoviesFragment
 import com.example.androidpractice.view.LikedMoviesFragment
-import com.google.android.gms.auth.api.Auth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
@@ -104,12 +102,9 @@ class MainActivity : AppCompatActivity() {
     private fun switchFragment(toolbarTitle: String, fragment: androidx.fragment.app.Fragment) {
         toolbar.title = toolbarTitle
 
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(
-            R.id.fragment_frameLayout,
-            fragment
-        )
-        fragmentTransaction.commit()
+        supportFragmentManager.commit {
+            replace(R.id.fragment_frameLayout, fragment)
+        }
 
         drawerLayout.closeDrawers()
     }
