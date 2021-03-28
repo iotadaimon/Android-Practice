@@ -11,11 +11,16 @@ class TMDBModel(
     private val apiKey: String
 ) : MovieModel {
 
+    private val picasso: Picasso = Picasso.get()
+
+    companion object {
+        const val POSTER_DIR_BASE_URI: String = "https://image.tmdb.org/t/p/w500"
+    }
+
     @Throws(IOException::class)
     override suspend fun getMovies(pageNumber: Int): List<Movie> {
         val response = tmdbService.getPopularMovies(apiKey, page = pageNumber).execute()
         if (response.isSuccessful) {
-            // TODO - put movie poster into persistent storage and assign path in movie instance
             return response.body()?.results ?: emptyList()
         } else {
             throw IOException()
@@ -23,7 +28,7 @@ class TMDBModel(
     }
 
     @Throws(IOException::class)
-    override suspend fun getMoviePoster(movie: Movie): Bitmap =
-        Picasso.get().load("https://image.tmdb.org/t/p/w500${movie.posterPath}").get()
+    override suspend fun getMoviePoster(movie: Movie): Bitmap? =
+        picasso.load("$POSTER_DIR_BASE_URI${movie.posterPath}").get()
 
 }

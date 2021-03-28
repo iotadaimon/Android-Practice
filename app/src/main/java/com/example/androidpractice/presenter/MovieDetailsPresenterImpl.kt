@@ -1,31 +1,35 @@
 package com.example.androidpractice.presenter
 
 import android.graphics.Bitmap
-import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.MovieDetailsPresenter
 import com.example.androidpractice.MovieDetailsView
+import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.model.local.LocalStorageModel
 import com.example.androidpractice.model.local.MovieDatabaseSingleton
 import kotlinx.coroutines.*
 
 class MovieDetailsPresenterImpl(
-    private val model: MutableMovieModel = defaultModel,
-    private val view: MovieDetailsView,
     private val coroutineScope: CoroutineScope = GlobalScope
 ) : MovieDetailsPresenter {
 
-    private companion object {
-        val defaultModel: MutableMovieModel
-            get() = LocalStorageModel(MovieDatabaseSingleton.movieDAO)
+    protected val model: MutableMovieModel // Assign model on instantiation
+    protected lateinit var view: MovieDetailsView
+
+    init {
+        model = LocalStorageModel(MovieDatabaseSingleton.movieDAO)
+    }
+
+    override fun attachView(view: MovieDetailsView) {
+        this.view = view
     }
 
     override fun presentMovieDetails(movie: Movie) {
-        val poster: Bitmap =
-            Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8)// TODO - get image from storage
-
-        val movieProperties = movie.getMovieProperties()
-        view.showMovieDetails(poster, movieProperties)
+        coroutineScope.launch(Dispatchers.IO) {
+            val poster: Bitmap? = model.getMoviePoster(movie)
+            val movieProperties = movie.getMovieProperties()
+            launch(Dispatchers.Main) { view.showMovieDetails(poster, movieProperties) }
+        }
     }
 
     override fun toggleLikedMovie(movie: Movie) = when (checkIfLiked(movie)) {

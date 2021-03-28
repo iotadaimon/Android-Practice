@@ -1,10 +1,16 @@
 package com.example.androidpractice.model.local
 
+import android.graphics.Bitmap
 import com.example.androidpractice.Constants
 import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.model.entity.Movie
+import com.example.androidpractice.model.web.TMDBModel
+import com.squareup.picasso.Picasso
+import java.io.IOException
 
 class LocalStorageModel(private val movieDAO: MovieDAO) : MutableMovieModel {
+
+    private val picasso: Picasso = Picasso.get()
 
     override suspend fun addMovie(movie: Movie) = movieDAO.insertAll(movie)
 
@@ -17,5 +23,9 @@ class LocalStorageModel(private val movieDAO: MovieDAO) : MutableMovieModel {
     }
 
     override suspend fun getMoviesById(id: Int): List<Movie> = movieDAO.loadAllById(id)
+
+    @Throws(IOException::class)
+    override suspend fun getMoviePoster(movie: Movie): Bitmap? =
+        picasso.load("${TMDBModel.POSTER_DIR_BASE_URI}${movie.posterPath}").get()
 
 }

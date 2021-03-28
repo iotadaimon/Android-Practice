@@ -8,12 +8,11 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-// TODO - Store poster image files
 @Entity(tableName = "liked_movies")
 @Parcelize
 data class Movie(
 
-    @Ignore
+    @ColumnInfo(name = "poster_path")
     @SerializedName("poster_path")
     var posterPath: String? = null,
 
