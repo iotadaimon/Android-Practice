@@ -11,7 +11,7 @@ interface MovieModel {
         TODO("Not yet implemented")
     }
 
-    suspend fun getMoviePoster(movie: Movie): Bitmap {
+    suspend fun getMoviePoster(movie: Movie): Bitmap? {
         TODO("Not yet implemented")
     }
 
@@ -43,17 +43,26 @@ interface MovieView {
 }
 
 interface MovieDetailsView {
-    fun showMovieDetails(poster: Bitmap, properties: Map<String, Any?>)
+    fun showMovieDetails(posterBitmap: Bitmap?, properties: Map<String, Any?>)
     fun showAddedMovieMessage()
     fun showDeletedMovieMessage()
     fun toggleLikedMovie(movie: Movie)
 }
 
 interface MoviePresenter {
+
+    fun attachView(view: MovieView)
+
     fun presentMovies(upToPageNumber: Int = 1, refresh: Boolean = false)
+
+    fun getMoviePoster(movie: Movie): Bitmap {
+        TODO("Not yet implemented")
+    }
+
 }
 
 interface MovieDetailsPresenter {
+    fun attachView(view: MovieDetailsView)
     fun presentMovieDetails(movie: Movie)
     fun toggleLikedMovie(movie: Movie)
     fun checkIfLiked(movie: Movie): Boolean

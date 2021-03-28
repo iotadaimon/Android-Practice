@@ -47,7 +47,8 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
             finish()
         }
 
-        presenter = MovieDetailsPresenterImpl(view = this)
+        presenter = MovieDetailsPresenterImpl()
+        presenter.attachView(this)
     }
 
     override fun onStart() {
@@ -58,10 +59,10 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
     fun toggleFavouriteMovie(view: View) = toggleLikedMovie(movie)
 
-    override fun showMovieDetails(posterBitmap: Bitmap, properties: Map<String, Any?>) {
+    override fun showMovieDetails(posterBitmap: Bitmap?, properties: Map<String, Any?>) {
         supportActionBar?.title = movie.title
 
-        posterImageView.setImageBitmap(posterBitmap)
+        posterBitmap?.let { posterImageView.setImageBitmap(it) }
 
         // Add properties
         for ((key, value) in properties) {

@@ -10,15 +10,20 @@ import kotlinx.coroutines.sync.withLock
 import java.io.IOException
 
 abstract class AbstractMovieListPresenter(
-    protected val model: MovieModel,
-    protected val view: MovieView,
-    protected val coroutineScope: CoroutineScope
+    protected val coroutineScope: CoroutineScope = GlobalScope
 ) : MoviePresenter {
+
+    protected lateinit var model: MovieModel // Assign model on instantiation
+    protected lateinit var view: MovieView
 
     protected val mutex: Mutex = Mutex()
 
     protected var lastLoadedPageNumber = 0
     protected var movies: MutableList<Movie> = mutableListOf()
+
+    override fun attachView(view: MovieView) {
+        this.view = view
+    }
 
     override fun presentMovies(upToPageNumber: Int, refresh: Boolean) {
         coroutineScope.launch(Dispatchers.Main) {

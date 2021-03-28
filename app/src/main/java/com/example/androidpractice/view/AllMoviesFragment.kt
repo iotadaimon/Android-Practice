@@ -9,7 +9,8 @@ class AllMoviesFragment : AbstractMovieListFragment(), MovieView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = AllMoviesPresenter(view = this)
+        presenter = AllMoviesPresenter()
+        presenter.attachView(this)
     }
 
     override fun onStart() {
