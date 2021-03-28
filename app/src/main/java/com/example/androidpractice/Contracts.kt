@@ -17,11 +17,6 @@ interface MovieModel {
 
 }
 
-interface MutableMovieModel : MovieModel {
-    suspend fun addMovie(movie: Movie)
-    suspend fun removeMovie(movie: Movie)
-}
-
 interface MovieView {
 
     fun showMovies(movies: List<Movie>)
@@ -42,13 +37,6 @@ interface MovieView {
 
 }
 
-interface MovieDetailsView {
-    fun showMovieDetails(posterBitmap: Bitmap?, properties: Map<String, Any?>)
-    fun showAddedMovieMessage()
-    fun showDeletedMovieMessage()
-    fun toggleLikedMovie(movie: Movie)
-}
-
 interface MoviePresenter {
 
     fun attachView(view: MovieView)
@@ -61,9 +49,26 @@ interface MoviePresenter {
 
 }
 
+/**
+ *  Movie Details
+ */
+
+interface MovieDetailsView {
+    fun showMovieDetails(posterBitmap: Bitmap?, properties: Map<String, Any?>)
+    fun showAddedMovieMessage()
+    fun showDeletedMovieMessage()
+    fun toggleLikedMovie(movie: Movie)
+}
+
+
 interface MovieDetailsPresenter {
     fun attachView(view: MovieDetailsView)
     fun presentMovieDetails(movie: Movie)
     fun toggleLikedMovie(movie: Movie)
     fun checkIfLiked(movie: Movie): Boolean
+}
+
+interface MutableMovieModel : MovieModel {
+    suspend fun addMovie(movie: Movie)
+    suspend fun removeMovie(movie: Movie)
 }
