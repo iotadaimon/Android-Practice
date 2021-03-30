@@ -2,16 +2,18 @@ package com.example.androidpractice
 
 import android.graphics.Bitmap
 import com.example.androidpractice.model.entity.Movie
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 
 interface MovieModel {
 
-    suspend fun getMovies(pageNumber: Int = 1): List<Movie>
+    fun getMoviePageRx(pageNumber: Int = 1): Single<List<Movie>>
 
-    suspend fun getMoviesById(id: Int): List<Movie> {
+    fun getMoviesByIdRx(id: Int): Single<List<Movie>> {
         TODO("Not yet implemented")
     }
 
-    suspend fun getMoviePoster(movie: Movie): Bitmap? {
+    fun getMoviePosterRx(movie: Movie): Single<Bitmap?> {
         TODO("Not yet implemented")
     }
 
@@ -60,15 +62,14 @@ interface MovieDetailsView {
     fun toggleLikedMovie(movie: Movie)
 }
 
-
 interface MovieDetailsPresenter {
     fun attachView(view: MovieDetailsView)
     fun presentMovieDetails(movie: Movie)
     fun toggleLikedMovie(movie: Movie)
-    fun checkIfLiked(movie: Movie): Boolean
+    fun checkIfLikedRx(movie: Movie): Single<Boolean>
 }
 
 interface MutableMovieModel : MovieModel {
-    suspend fun addMovie(movie: Movie)
-    suspend fun removeMovie(movie: Movie)
+    fun addMovieRx(movie: Movie) : Completable
+    fun removeMovieRx(movie: Movie) : Completable
 }

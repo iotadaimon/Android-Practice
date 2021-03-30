@@ -15,6 +15,8 @@ import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.presenter.MovieDetailsPresenterImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
@@ -93,12 +95,18 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
     override fun toggleLikedMovie(movie: Movie) = presenter.toggleLikedMovie(movie)
 
     private fun updateFabIcon() {
-        val drawableResId: Int = when (presenter.checkIfLiked(movie)) {
-            true -> R.drawable.ic_baseline_liked_24
-            false -> R.drawable.ic_baseline_liked_border_24
-        }
+        val movieLikedStatusSingle = presenter.checkIfLikedRx(movie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
-        setFabDrawable(drawableResId)
+        movieLikedStatusSingle.subscribe { isLiked ->
+            val drawableResId: Int = when (isLiked) {
+                true -> R.drawable.ic_baseline_liked_24
+                false -> R.drawable.ic_baseline_liked_border_24
+            }
+
+            setFabDrawable(drawableResId)
+        }
     }
 
     private fun setFabDrawable(drawableResId: Int) = floatingActionButton.setImageDrawable(
@@ -107,7 +115,6 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
             drawableResId
         )
     )
-
 
     private fun makeToast(message: String) = Toast.makeText(
         this,

@@ -1,6 +1,6 @@
 package com.example.androidpractice.model.web
 
-import retrofit2.Call
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -19,6 +19,6 @@ interface TMDBService {
         @Query("language") language: String = DEFAULT_LANGUAGE_ARGUMENT,
         @Query("page") page: Int = DEFAULT_PAGE_ARGUMENT,
         @Query("region") region: String = DEFAULT_REGION_ARGUMENT
-    ): Call<TMDBResponse>
+    ): Single<TMDBResponse>
 
 }

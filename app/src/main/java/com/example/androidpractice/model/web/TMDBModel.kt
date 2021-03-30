@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import com.example.androidpractice.MovieModel
 import com.example.androidpractice.model.entity.Movie
 import com.squareup.picasso.Picasso
-import java.io.IOException
+import io.reactivex.rxjava3.core.Single
 
 class TMDBModel(
     private val tmdbService: TMDBService,
@@ -17,18 +17,13 @@ class TMDBModel(
         const val POSTER_DIR_BASE_URI: String = "https://image.tmdb.org/t/p/w500"
     }
 
-    @Throws(IOException::class)
-    override suspend fun getMovies(pageNumber: Int): List<Movie> {
-        val response = tmdbService.getPopularMovies(apiKey, page = pageNumber).execute()
-        if (response.isSuccessful) {
-            return response.body()?.results ?: emptyList()
-        } else {
-            throw IOException()
-        }
-    }
+    override fun getMoviePageRx(pageNumber: Int): Single<List<Movie>> =
+        tmdbService.getPopularMovies(apiKey, page = pageNumber)
+            .map { response -> response.results }
 
-    @Throws(IOException::class)
-    override suspend fun getMoviePoster(movie: Movie): Bitmap? =
-        picasso.load("$POSTER_DIR_BASE_URI${movie.posterPath}").get()
+    override fun getMoviePosterRx(movie: Movie): Single<Bitmap?> = Single.create {
+        val bitmap = picasso.load("$POSTER_DIR_BASE_URI${movie.posterPath}").get()
+        it.onSuccess(bitmap)
+    }
 
 }

@@ -48,7 +48,6 @@ abstract class AbstractMovieListFragment : Fragment(),
         return view
     }
 
-
     override fun showMovies(movies: List<Movie>) {
         recyclerViewAdapter.movieList = movies
         recyclerViewAdapter.notifyDataSetChanged()
@@ -63,7 +62,6 @@ abstract class AbstractMovieListFragment : Fragment(),
     override fun showProgressIndicator() {
         progressIndicator?.show()
     }
-
 
     override fun hideProgressIndicator() {
         progressIndicator?.hide()
