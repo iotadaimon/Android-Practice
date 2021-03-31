@@ -16,7 +16,7 @@ class AllMoviesListPresenter : AbstractMovieListPresenter() {
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(TMDBService::class.java)
 
-        model = TMDBModel(tmdbService, Constants.API_KEY, Constants.POSTER_DIR_BASE_URI)
+        model = TMDBModel(tmdbService, Constants.API_KEY, Constants.POSTER_SOURCE_URI)
     }
 
 }

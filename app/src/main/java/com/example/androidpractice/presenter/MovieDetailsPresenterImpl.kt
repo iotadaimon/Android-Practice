@@ -12,7 +12,7 @@ class MovieDetailsPresenterImpl : MovieDetailsContract.Presenter {
 
     private val model: MutableMovieModel = LocalStorageModel(
         MovieDatabaseSingleton.movieDAO,
-        Constants.POSTER_DIR_BASE_URI
+        Constants.POSTER_SOURCE_URI
     )
 
     private lateinit var view: MovieDetailsContract.View

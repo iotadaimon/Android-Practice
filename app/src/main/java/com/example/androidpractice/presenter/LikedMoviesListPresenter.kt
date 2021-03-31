@@ -7,7 +7,7 @@ import com.example.androidpractice.model.local.MovieDatabaseSingleton
 class LikedMoviesListPresenter : AbstractMovieListPresenter() {
 
     init {
-        model = LocalStorageModel(MovieDatabaseSingleton.movieDAO, Constants.POSTER_DIR_BASE_URI)
+        model = LocalStorageModel(MovieDatabaseSingleton.movieDAO, Constants.POSTER_SOURCE_URI)
     }
 
 }
