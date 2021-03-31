@@ -1,4 +1,4 @@
-package com.example.androidpractice.view
+package com.example.androidpractice.moviedetails
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import com.example.androidpractice.MovieDetailsContract
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
-import com.example.androidpractice.presenter.MovieDetailsPresenter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MovieDetailsActivity : AppCompatActivity(),

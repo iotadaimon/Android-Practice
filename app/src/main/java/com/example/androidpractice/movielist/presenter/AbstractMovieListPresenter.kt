@@ -1,4 +1,4 @@
-package com.example.androidpractice.presenter
+package com.example.androidpractice.movielist.presenter
 
 import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.MovieModel

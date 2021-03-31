@@ -1,9 +1,9 @@
-package com.example.androidpractice.view
+package com.example.androidpractice.movielist.view
 
 import android.os.Bundle
 import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.R
-import com.example.androidpractice.presenter.AllMoviesListPresenter
+import com.example.androidpractice.movielist.presenter.AllMoviesListPresenter
 
 class AllMoviesFragment : AbstractMovieListFragment(), MovieListContract.View {
 

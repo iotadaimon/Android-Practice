@@ -1,4 +1,4 @@
-package com.example.androidpractice.view
+package com.example.androidpractice.movielist.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpractice.*
 import com.example.androidpractice.model.entity.Movie
+import com.example.androidpractice.moviedetails.MovieDetailsActivity
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 abstract class AbstractMovieListFragment : Fragment(),
@@ -76,7 +77,10 @@ abstract class AbstractMovieListFragment : Fragment(),
 
 }
 
-class MovieAdapter(internal var movieList: List<Movie>, private val movieListView: MovieListContract.View) :
+class MovieAdapter(
+    internal var movieList: List<Movie>,
+    private val movieListView: MovieListContract.View
+) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -105,7 +109,7 @@ class MovieAdapter(internal var movieList: List<Movie>, private val movieListVie
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(movieList[position])
         holder.itemView.setOnClickListener {
-            movieListView.showMovieDetails(movieList[position])
+            movieListView.showMovieDetails(movieList[position]) // Open movie details on click on the movie list item
         }
     }
 

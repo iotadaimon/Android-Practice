@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.commit
 import com.example.androidpractice.R
-import com.example.androidpractice.view.AllMoviesFragment
-import com.example.androidpractice.view.LikedMoviesFragment
+import com.example.androidpractice.movielist.view.AllMoviesFragment
+import com.example.androidpractice.movielist.view.LikedMoviesFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.squareup.picasso.Picasso
