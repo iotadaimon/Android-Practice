@@ -1,6 +1,8 @@
 package com.example.androidpractice.presenter
 
-import com.example.androidpractice.*
+import com.example.androidpractice.Constants
+import com.example.androidpractice.MovieDetailsContract
+import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.model.local.LocalStorageModel
 import com.example.androidpractice.model.local.MovieDatabaseSingleton
