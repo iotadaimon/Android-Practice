@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MovieDetailsPresenterImpl : MovieDetailsContract.Presenter {
+class MovieDetailsPresenter : MovieDetailsContract.Presenter {
 
     private val model: MutableMovieModel = LocalStorageModel(
         MovieDatabaseSingleton.movieDAO,

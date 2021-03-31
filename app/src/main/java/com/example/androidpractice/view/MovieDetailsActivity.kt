@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import com.example.androidpractice.MovieDetailsContract
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
-import com.example.androidpractice.presenter.MovieDetailsPresenterImpl
+import com.example.androidpractice.presenter.MovieDetailsPresenter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MovieDetailsActivity : AppCompatActivity(),
@@ -43,7 +43,7 @@ class MovieDetailsActivity : AppCompatActivity(),
             finish()
         }
 
-        presenter = MovieDetailsPresenterImpl()
+        presenter = MovieDetailsPresenter()
         presenter.attachView(this)
     }
 
