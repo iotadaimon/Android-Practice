@@ -15,8 +15,6 @@ import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.presenter.MovieDetailsPresenterImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
@@ -41,11 +39,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
         floatingActionButton = findViewById(R.id.fab)
 
         movie = intent.getParcelableExtra(DATA_MOVIE) ?: Movie().also {
-            Toast.makeText(
-                this,
-                resources.getText(R.string.movie_details_error_message),
-                Toast.LENGTH_SHORT
-            ).show()
+            makeToast(resources.getString(R.string.movie_details_error_message))
             finish()
         }
 
@@ -56,65 +50,56 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
     override fun onStart() {
         super.onStart()
         presenter.presentMovieDetails(movie)
-        updateFabIcon()
+        presenter.presentLikedStatus(movie)
     }
-
-    fun toggleFavouriteMovie(view: View) = toggleLikedMovie(movie)
 
     override fun showMovieDetails(posterBitmap: Bitmap?, properties: Map<String, Any?>) {
         supportActionBar?.title = movie.title
 
         posterBitmap?.let { posterImageView.setImageBitmap(it) }
 
-        // Add properties
-        for ((key, value) in properties) {
-            val moviePropertyView =
-                layoutInflater.inflate(R.layout.recyclerview_item_movie_property, null)
-            val propertyNameTextView: TextView =
-                moviePropertyView.findViewById(R.id.movie_property_name_textView)
-            val propertyValueTextView: TextView =
-                moviePropertyView.findViewById(R.id.movie_property_value_textView)
-
-            propertyNameTextView.text = key
-            propertyValueTextView.text = value.toString()
-
+        // Show movie properties
+        properties.entries.forEach { mapEntry ->
+            val moviePropertyView = getInflatedMoviePropertyView(mapEntry.key, mapEntry.value)
             linearLayout.addView(moviePropertyView)
         }
     }
 
-    override fun showAddedMovieMessage() {
-        makeToast(resources.getString(R.string.liked_movie_added)).show()
-        setFabDrawable(R.drawable.ic_baseline_liked_24)
+    private fun getInflatedMoviePropertyView(propertyName: String, propertyValue: Any?): View {
+        val moviePropertyView =
+            layoutInflater.inflate(R.layout.recyclerview_item_movie_property, null)
+        val propertyNameTextView: TextView =
+            moviePropertyView.findViewById(R.id.movie_property_name_textView)
+        val propertyValueTextView: TextView =
+            moviePropertyView.findViewById(R.id.movie_property_value_textView)
+
+        propertyNameTextView.text = propertyName
+        propertyValueTextView.text = propertyValue.toString()
+
+        return moviePropertyView
     }
 
-    override fun showDeletedMovieMessage() {
-        makeToast(resources.getString(R.string.liked_movie_removed)).show()
-        setFabDrawable(R.drawable.ic_baseline_liked_border_24)
+    override fun showLikedStatus(isLiked: Boolean) = updateFabIcon(isLiked)
+
+    private fun updateFabIcon(isLiked: Boolean) {
+        val drawableResId: Int = when (isLiked) {
+            true -> R.drawable.ic_baseline_liked_24
+            false -> R.drawable.ic_baseline_liked_border_24
+        }
+
+        val drawable = ContextCompat.getDrawable(this, drawableResId)
+        floatingActionButton.setImageDrawable(drawable)
     }
+
+    fun toggleLikedMovie(view: View) = toggleLikedMovie(movie)
 
     override fun toggleLikedMovie(movie: Movie) = presenter.toggleLikedMovie(movie)
 
-    private fun updateFabIcon() {
-        val movieLikedStatusSingle = presenter.checkIfLikedRx(movie)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+    override fun showAddedMovieMessage() =
+        makeToast(resources.getString(R.string.liked_movie_added)).show()
 
-        movieLikedStatusSingle.subscribe { isLiked ->
-            val drawableResId: Int = when (isLiked) {
-                true -> R.drawable.ic_baseline_liked_24
-                false -> R.drawable.ic_baseline_liked_border_24
-            }
-
-            setFabDrawable(drawableResId)
-        }
-    }
-
-    private fun setFabDrawable(drawableResId: Int) = floatingActionButton.setImageDrawable(
-        ContextCompat.getDrawable(
-            this,
-            drawableResId
-        )
-    )
+    override fun showDeletedMovieMessage() =
+        makeToast(resources.getString(R.string.liked_movie_removed)).show()
 
     private fun makeToast(message: String) = Toast.makeText(
         this,

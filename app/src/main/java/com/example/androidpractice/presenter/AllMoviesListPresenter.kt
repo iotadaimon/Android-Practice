@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AllMoviesPresenter : AbstractMovieListPresenter() {
+class AllMoviesListPresenter : AbstractMovieListPresenter() {
 
     init {
         val tmdbService = Retrofit.Builder()
@@ -16,7 +16,7 @@ class AllMoviesPresenter : AbstractMovieListPresenter() {
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(TMDBService::class.java)
 
-        model = TMDBModel(tmdbService, Constants.API_KEY)
+        model = TMDBModel(tmdbService, Constants.API_KEY, Constants.POSTER_DIR_BASE_URI)
     }
 
 }

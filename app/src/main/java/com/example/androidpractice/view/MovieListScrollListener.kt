@@ -2,12 +2,12 @@ package com.example.androidpractice.view
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidpractice.MoviePresenter
+import com.example.androidpractice.MovieListPresenter
 
 class MovieListScrollListener(
     private val pageSize: Int,
     private val linearLayoutManager: LinearLayoutManager,
-    private val moviePresenter: MoviePresenter
+    private val presenter: MovieListPresenter
 ) : RecyclerView.OnScrollListener() {
 
     private var currentPageNumber = 1
@@ -19,7 +19,7 @@ class MovieListScrollListener(
 
         if (lastVisibleMovieItemIndex + 1 == pageSize * currentPageNumber) {
             currentPageNumber++ // TODO - Don't increment page number if the preseter fails to present movies
-            moviePresenter.presentMovies(currentPageNumber)
+            presenter.presentMovies(currentPageNumber)
         }
     }
 

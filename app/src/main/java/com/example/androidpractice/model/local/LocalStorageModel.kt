@@ -4,12 +4,14 @@ import android.graphics.Bitmap
 import com.example.androidpractice.Constants
 import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.model.entity.Movie
-import com.example.androidpractice.model.web.TMDBModel
 import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-class LocalStorageModel(private val movieDAO: MovieDAO) : MutableMovieModel {
+class LocalStorageModel(
+    private val movieDAO: MovieDAO,
+    private val posterDirPath: String
+) : MutableMovieModel {
 
     private val picasso: Picasso = Picasso.get()
 
@@ -29,7 +31,7 @@ class LocalStorageModel(private val movieDAO: MovieDAO) : MutableMovieModel {
     override fun getMoviesByIdRx(id: Int): Single<List<Movie>> = movieDAO.loadAllById(id)
 
     override fun getMoviePosterRx(movie: Movie): Single<Bitmap?> = Single.create {
-        val bitmap = picasso.load("${TMDBModel.POSTER_DIR_BASE_URI}${movie.posterPath}").get()
+        val bitmap = picasso.load("$posterDirPath${movie.posterPath}").get()
         it.onSuccess(bitmap)
     }
 

@@ -38,11 +38,8 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
 
         toggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
+            this, drawerLayout, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
 
@@ -60,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_all_movies -> showAllMoviesFragment()
                 R.id.nav_liked_movies -> showLikedMoviesFragment()
-                R.id.nav_logout -> logout()
+                R.id.nav_logout -> logoutAndFinish()
             }
             true
         }
@@ -69,6 +66,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initDrawerHeaderWithUserData(firebaseUser: FirebaseUser?) {
+        // Get layout elements
         val navigationHeader = navigationView.getHeaderView(0)
         val drawerHeaderImageView: ImageView =
             navigationHeader.findViewById(R.id.drawer_header_imageView)
@@ -81,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         val photoUrl = firebaseUser?.photoUrl
         if (photoUrl != null) Picasso.get().load(photoUrl).into(drawerHeaderImageView)
 
+        // Assign text with name and email to header fields
         drawerHeaderNameTextView.text = firebaseUser?.displayName
         drawerHeaderEmailTextView.text = firebaseUser?.email
     }
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         if (savedInstanceState == null) {
-            // Show the default fragment
+            // Show the default fragment on app launch
             navigationView.setCheckedItem(R.id.nav_all_movies)
             showAllMoviesFragment()
         }
@@ -102,6 +101,10 @@ class MainActivity : AppCompatActivity() {
     private fun showLikedMoviesFragment() =
         switchFragment(getString(R.string.nav_liked_movies), LikedMoviesFragment())
 
+    /**
+     *  Show the fragment passed through the [fragment] parameter and change the title
+     *  with the value passed into [toolbarTitle].
+     */
     private fun switchFragment(toolbarTitle: String, fragment: androidx.fragment.app.Fragment) {
         toolbar.title = toolbarTitle
 
@@ -112,9 +115,13 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.closeDrawers()
     }
 
-    private fun logout() {
+    /**
+     * Log out the user from Firebase and close the app.
+     */
+    private fun logoutAndFinish() {
         firebaseAuth.signOut()
-        Toast.makeText(this, "Restart the app to log in with a different user", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Restart the app to log in with a different user", Toast.LENGTH_SHORT)
+            .show()
         finish()
     }
 

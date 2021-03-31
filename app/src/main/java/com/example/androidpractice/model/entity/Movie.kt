@@ -17,7 +17,7 @@ data class Movie(
     var posterPath: String? = null,
 
     @SerializedName("adult")
-    var adult: Boolean? = null,
+    var isAdult: Boolean? = null,
 
     @SerializedName("overview")
     var overview: String? = null,
@@ -62,4 +62,5 @@ data class Movie(
     @ColumnInfo(name = "vote_average")
     @SerializedName("vote_average")
     var voteAverage: Float? = null
+
 ) : Parcelable

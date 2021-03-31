@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:onClick="toggleFavouriteMovie"
+        android:onClick="toggleLikedMovie"
         app:backgroundTint="@color/yellow_500"
         app:srcCompat="@drawable/ic_baseline_liked_border_24" />
 

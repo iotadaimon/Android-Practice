@@ -14,23 +14,25 @@ import com.example.androidpractice.model.entity.Movie
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 abstract class AbstractMovieListFragment : Fragment(),
-    MovieView {
+    MovieListView {
 
-    protected lateinit var presenter: MoviePresenter
+    protected lateinit var presenter: MovieListPresenter
 
-    private var progressIndicator: LinearProgressIndicator? = null
+    private lateinit var progressIndicator: LinearProgressIndicator
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        progressIndicator = activity?.findViewById(R.id.main_activity_progress_indicator)
+        activity?.let {
+            progressIndicator = it.findViewById(R.id.main_activity_progress_indicator)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_movie_list, container, false)
 
         recyclerView = view.findViewById(R.id.movie_list_recycler_view)
@@ -59,13 +61,9 @@ abstract class AbstractMovieListFragment : Fragment(),
         startActivity(intent)
     }
 
-    override fun showProgressIndicator() {
-        progressIndicator?.show()
-    }
+    override fun showProgressIndicator() = progressIndicator.show()
 
-    override fun hideProgressIndicator() {
-        progressIndicator?.hide()
-    }
+    override fun hideProgressIndicator() = progressIndicator.hide()
 
     protected fun showToast(message: String) {
         Toast.makeText(

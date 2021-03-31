@@ -1,15 +1,15 @@
 package com.example.androidpractice.view
 
 import android.os.Bundle
-import com.example.androidpractice.MovieView
+import com.example.androidpractice.MovieListView
 import com.example.androidpractice.R
-import com.example.androidpractice.presenter.LikedMoviesPresenter
+import com.example.androidpractice.presenter.LikedMoviesListPresenter
 
-class LikedMoviesFragment : AbstractMovieListFragment(), MovieView {
+class LikedMoviesFragment : AbstractMovieListFragment(), MovieListView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = LikedMoviesPresenter()
+        presenter = LikedMoviesListPresenter()
         presenter.attachView(this)
     }
 

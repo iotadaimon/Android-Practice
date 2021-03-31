@@ -1,5 +1,6 @@
 package com.example.androidpractice.presenter
 
+import com.example.androidpractice.Constants
 import com.example.androidpractice.MovieDetailsPresenter
 import com.example.androidpractice.MovieDetailsView
 import com.example.androidpractice.MutableMovieModel
@@ -12,51 +13,53 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MovieDetailsPresenterImpl : MovieDetailsPresenter {
 
-    protected val model: MutableMovieModel // Assign model on instantiation
-    protected lateinit var view: MovieDetailsView
+    private val model: MutableMovieModel = LocalStorageModel(
+        MovieDatabaseSingleton.movieDAO,
+        Constants.POSTER_DIR_BASE_URI
+    )
 
-    init {
-        model = LocalStorageModel(MovieDatabaseSingleton.movieDAO)
-    }
+    private lateinit var view: MovieDetailsView
 
     override fun attachView(view: MovieDetailsView) {
         this.view = view
     }
 
+    // TODO - handle error cases
     override fun presentMovieDetails(movie: Movie) {
-        val moviePosterSingle = model.getMoviePosterRx(movie)
+        val movieProperties = movie.getMovieProperties()
+
+        model.getMoviePosterRx(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
-        moviePosterSingle.subscribe { posterBitmap ->
-            val movieProperties = movie.getMovieProperties()
-            view.showMovieDetails(posterBitmap, movieProperties)
-        }
-
-    }
-
-    override fun toggleLikedMovie(movie: Movie) {
-        val movieLikedStatusSingle = checkIfLikedRx(movie)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-
-        movieLikedStatusSingle.subscribe { isLiked ->
-            when (isLiked) {
-                true -> deleteLikedMovie(movie)
-                false -> addLikedMovie(movie)
+            .subscribe { posterBitmap ->
+                view.showMovieDetails(posterBitmap, movieProperties)
             }
-        }
     }
 
-    override fun checkIfLikedRx(movie: Movie): Single<Boolean> =
+    override fun presentLikedStatus(movie: Movie) {
+        checkIfLikedRx(movie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { isLiked ->
+                view.showLikedStatus(isLiked)
+            }
+    }
+
+    private fun checkIfLikedRx(movie: Movie): Single<Boolean> =
         model.getMoviesByIdRx(movie.id ?: -1)
             .map { list -> list.isNotEmpty() }
 
-    private fun addLikedMovie(movie: Movie) {
-        model.addMovieRx(movie)
+    override fun toggleLikedMovie(movie: Movie) {
+        checkIfLikedRx(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { view.showAddedMovieMessage() }
+            .subscribe { isLiked ->
+                when (isLiked) {
+                    true -> deleteLikedMovie(movie)
+                    false -> addLikedMovie(movie)
+                }
+                view.showLikedStatus(!isLiked)
+            }
     }
 
     private fun deleteLikedMovie(movie: Movie) {
@@ -66,11 +69,20 @@ class MovieDetailsPresenterImpl : MovieDetailsPresenter {
             .subscribe { view.showDeletedMovieMessage() }
     }
 
+    private fun addLikedMovie(movie: Movie) {
+        model.addMovieRx(movie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { view.showAddedMovieMessage() }
+    }
+
 }
 
-// Extracts and returns a list of properties from a Movie instance
+/**
+ * Extract and return the list of properties from a [Movie] instance.
+ */
 private fun Movie.getMovieProperties(): Map<String, Any?> = linkedMapOf(
-    "Adult" to this.adult,
+    "Adult" to this.isAdult,
     "Overview" to this.overview,
     "Release Date" to this.releaseDate,
     "ID" to this.id,

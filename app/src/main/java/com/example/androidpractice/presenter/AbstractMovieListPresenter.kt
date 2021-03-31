@@ -1,8 +1,8 @@
 package com.example.androidpractice.presenter
 
 import com.example.androidpractice.MovieModel
-import com.example.androidpractice.MoviePresenter
-import com.example.androidpractice.MovieView
+import com.example.androidpractice.MovieListPresenter
+import com.example.androidpractice.MovieListView
 import com.example.androidpractice.model.entity.Movie
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -10,16 +10,16 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-abstract class AbstractMovieListPresenter : MoviePresenter {
+abstract class AbstractMovieListPresenter : MovieListPresenter {
 
     protected lateinit var model: MovieModel // Assign model on instantiation
-    protected lateinit var view: MovieView
+    protected lateinit var view: MovieListView  // Assign view after creation
 
     protected var lastLoadedPageNumber = 0
-    protected var movies: MutableList<Movie> = mutableListOf()
+    protected var movies: MutableList<Movie> = mutableListOf()  // List for caching
     protected var isInProgress: Boolean = false
 
-    override fun attachView(view: MovieView) {
+    override fun attachView(view: MovieListView) {
         this.view = view
     }
 
@@ -31,37 +31,39 @@ abstract class AbstractMovieListPresenter : MoviePresenter {
 
         if (refresh) clearCache()
 
-        val pageRange = (lastLoadedPageNumber + 1)..upToPageNumber
+        val pagesToLoadRange = (lastLoadedPageNumber + 1)..upToPageNumber
 
-        val moviePageSingleList = pageRange
+        val moviePageSingleList = pagesToLoadRange
             .map { pageNumber -> model.getMoviePageRx(pageNumber).toObservable() }
 
         val moviesSingles = Observable.concat(moviePageSingleList)
+
+        moviesSingles
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<List<Movie>> {
 
-        moviesSingles.subscribe(object : Observer<List<Movie>> {
+                override fun onSubscribe(d: Disposable?) {}
 
-            override fun onSubscribe(d: Disposable?) {}
+                override fun onNext(t: List<Movie>?) {
+                    t?.let { movies.addAll(it) }
+                }
 
-            override fun onNext(t: List<Movie>?) {
-                t?.let { movies.addAll(it) }
-            }
+                override fun onError(e: Throwable?) {
+                    view.hideProgressIndicator()
+                    view.showErrorToast()
+                }
 
-            override fun onError(e: Throwable?) {
-                view.hideProgressIndicator()
-                view.showErrorToast()
-            }
+                override fun onComplete() {
+                    view.showMovies(movies)
 
-            override fun onComplete() {
-                view.hideProgressIndicator()
-                view.showMovies(movies)
+                    lastLoadedPageNumber = upToPageNumber
 
-                lastLoadedPageNumber = upToPageNumber
-                isInProgress = false
-            }
+                    view.hideProgressIndicator()
+                    isInProgress = false
+                }
 
-        })
+            })
     }
 
     protected fun clearCache() {

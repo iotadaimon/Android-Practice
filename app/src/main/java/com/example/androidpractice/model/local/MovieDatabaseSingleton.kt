@@ -11,7 +11,10 @@ object MovieDatabaseSingleton {
     internal lateinit var movieDAO: MovieDAO
         private set
 
-    // Call in advance
+    /**
+     * Initialize class members with appropriate values using the given [Context].
+     * Warning - this method should be called before interacting with the class members.
+     */
     fun prepareDatabase(context: Context) {
         movieDatabase = Room.databaseBuilder(
             context,
