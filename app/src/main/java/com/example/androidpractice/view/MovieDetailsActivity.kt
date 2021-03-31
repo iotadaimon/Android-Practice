@@ -9,14 +9,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.androidpractice.MovieDetailsPresenter
-import com.example.androidpractice.MovieDetailsView
+import com.example.androidpractice.MovieDetailsContract
 import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.presenter.MovieDetailsPresenterImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
+class MovieDetailsActivity : AppCompatActivity(),
+    MovieDetailsContract.View {
 
     companion object {
         const val DATA_MOVIE: String = "DATA_MOVIE"
@@ -28,7 +28,7 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
 
     private lateinit var movie: Movie
 
-    private lateinit var presenter: MovieDetailsPresenter
+    private lateinit var presenter: MovieDetailsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

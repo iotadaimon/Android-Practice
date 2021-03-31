@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,9 +15,9 @@ import com.example.androidpractice.model.entity.Movie
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 abstract class AbstractMovieListFragment : Fragment(),
-    MovieListView {
+    MovieListContract.View {
 
-    protected lateinit var presenter: MovieListPresenter
+    protected lateinit var presenter: MovieListContract.Presenter
 
     private lateinit var progressIndicator: LinearProgressIndicator
     private lateinit var recyclerView: RecyclerView
@@ -71,6 +72,62 @@ abstract class AbstractMovieListFragment : Fragment(),
             message,
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+}
+
+class MovieAdapter(internal var movieList: List<Movie>, private val movieListView: MovieListContract.View) :
+    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+
+    class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val movieTitleTextView: TextView =
+            itemView.findViewById(R.id.movie_item_title_textView)
+        private val movieVoteAverageTextView: TextView =
+            itemView.findViewById(R.id.movie_item_vote_average_textView)
+
+        fun bind(movie: Movie) {
+            movieTitleTextView.text = movie.title
+            movieVoteAverageTextView.text = movie.voteAverage.toString()
+        }
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recyclerview_item_movie, parent, false)
+
+        return MovieViewHolder(view)
+    }
+
+    override fun getItemCount(): Int = movieList.size
+
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.bind(movieList[position])
+        holder.itemView.setOnClickListener {
+            movieListView.showMovieDetails(movieList[position])
+        }
+    }
+
+}
+
+class MovieListScrollListener(
+    private val pageSize: Int,
+    private val linearLayoutManager: LinearLayoutManager,
+    private val presenter: MovieListContract.Presenter
+) : RecyclerView.OnScrollListener() {
+
+    private var currentPageNumber = 1
+
+    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+
+        val lastVisibleMovieItemIndex = linearLayoutManager.findLastVisibleItemPosition()
+
+        if (lastVisibleMovieItemIndex + 1 == pageSize * currentPageNumber) {
+            currentPageNumber++ // TODO - Don't increment page number if the preseter fails to present movies
+            presenter.presentMovies(currentPageNumber)
+        }
     }
 
 }

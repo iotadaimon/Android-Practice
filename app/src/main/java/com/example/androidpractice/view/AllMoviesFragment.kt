@@ -1,11 +1,11 @@
 package com.example.androidpractice.view
 
 import android.os.Bundle
-import com.example.androidpractice.MovieListView
+import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.R
 import com.example.androidpractice.presenter.AllMoviesListPresenter
 
-class AllMoviesFragment : AbstractMovieListFragment(), MovieListView {
+class AllMoviesFragment : AbstractMovieListFragment(), MovieListContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

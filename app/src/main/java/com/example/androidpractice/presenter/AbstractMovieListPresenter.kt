@@ -1,8 +1,7 @@
 package com.example.androidpractice.presenter
 
+import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.MovieModel
-import com.example.androidpractice.MovieListPresenter
-import com.example.androidpractice.MovieListView
 import com.example.androidpractice.model.entity.Movie
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -10,16 +9,16 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-abstract class AbstractMovieListPresenter : MovieListPresenter {
+abstract class AbstractMovieListPresenter : MovieListContract.Presenter {
 
     protected lateinit var model: MovieModel // Assign model on instantiation
-    protected lateinit var view: MovieListView  // Assign view after creation
+    protected lateinit var view: MovieListContract.View  // Assign view after creation
 
     protected var lastLoadedPageNumber = 0
     protected var movies: MutableList<Movie> = mutableListOf()  // List for caching
     protected var isInProgress: Boolean = false
 
-    override fun attachView(view: MovieListView) {
+    override fun attachView(view: MovieListContract.View) {
         this.view = view
     }
 

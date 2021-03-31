@@ -33,25 +33,29 @@ interface MutableMovieModel : MovieModel {
  *  Movie List
  */
 
-interface MovieListView {
+interface MovieListContract {
 
-    fun showMovies(movies: List<Movie>)
+    interface View {
 
-    fun showMovieDetails(movie: Movie)
+        fun showMovies(movies: List<Movie>)
 
-    fun showProgressIndicator()
+        fun showMovieDetails(movie: Movie)
 
-    fun hideProgressIndicator()
+        fun showProgressIndicator()
 
-    fun showErrorToast()
+        fun hideProgressIndicator()
 
-}
+        fun showErrorToast()
 
-interface MovieListPresenter {
+    }
 
-    fun attachView(view: MovieListView)
+    interface Presenter {
 
-    fun presentMovies(upToPageNumber: Int = 1, refresh: Boolean = false)
+        fun attachView(view: View)
+
+        fun presentMovies(upToPageNumber: Int = 1, refresh: Boolean = false)
+
+    }
 
 }
 
@@ -59,28 +63,32 @@ interface MovieListPresenter {
  *  Movie Details
  */
 
-interface MovieDetailsView {
+interface MovieDetailsContract {
 
-    fun showMovieDetails(posterBitmap: Bitmap?, properties: Map<String, Any?>)
+    interface View {
 
-    fun showLikedStatus(isLiked: Boolean)
+        fun showMovieDetails(posterBitmap: Bitmap?, properties: Map<String, Any?>)
 
-    fun toggleLikedMovie(movie: Movie)
+        fun showLikedStatus(isLiked: Boolean)
 
-    fun showAddedMovieMessage()
+        fun toggleLikedMovie(movie: Movie)
 
-    fun showDeletedMovieMessage()
+        fun showAddedMovieMessage()
 
-}
+        fun showDeletedMovieMessage()
 
-interface MovieDetailsPresenter {
+    }
 
-    fun attachView(view: MovieDetailsView)
+    interface Presenter {
 
-    fun presentMovieDetails(movie: Movie)
+        fun attachView(view: View)
 
-    fun presentLikedStatus(movie: Movie)
+        fun presentMovieDetails(movie: Movie)
 
-    fun toggleLikedMovie(movie: Movie)
+        fun presentLikedStatus(movie: Movie)
+
+        fun toggleLikedMovie(movie: Movie)
+
+    }
 
 }
