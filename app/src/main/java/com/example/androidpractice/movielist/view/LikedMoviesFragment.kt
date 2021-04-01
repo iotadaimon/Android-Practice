@@ -19,5 +19,4 @@ class LikedMoviesFragment : AbstractMovieListFragment(), MovieListContract.View 
     }
 
     override fun showErrorToast() = showToast(getString(R.string.local_database_error_message))
-
 }

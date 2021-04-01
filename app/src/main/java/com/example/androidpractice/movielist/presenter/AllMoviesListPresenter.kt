@@ -18,5 +18,4 @@ class AllMoviesListPresenter : AbstractMovieListPresenter() {
 
         model = TMDBModel(tmdbService, Constants.API_KEY, Constants.POSTER_SOURCE_URI)
     }
-
 }

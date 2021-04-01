@@ -19,6 +19,4 @@ class AllMoviesFragment : AbstractMovieListFragment(), MovieListContract.View {
     }
 
     override fun showErrorToast() = showToast(getString(R.string.tmdb_api_response_error_message))
-
 }
-

@@ -12,10 +12,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 abstract class AbstractMovieListPresenter : MovieListContract.Presenter {
 
     protected lateinit var model: MovieModel // Assign model on instantiation
-    protected lateinit var view: MovieListContract.View  // Assign view after creation
+    protected lateinit var view: MovieListContract.View // Assign view after creation
 
     protected var lastLoadedPageNumber = 0
-    protected var movies: MutableList<Movie> = mutableListOf()  // List for caching
+    protected var movies: MutableList<Movie> = mutableListOf() // List for caching
     protected var isInProgress: Boolean = false
 
     override fun attachView(view: MovieListContract.View) {
@@ -23,7 +23,7 @@ abstract class AbstractMovieListPresenter : MovieListContract.Presenter {
     }
 
     override fun presentMovies(upToPageNumber: Int, refresh: Boolean) {
-        if (isInProgress) return    // Don't do anything if the operation is already in progress
+        if (isInProgress) return // Don't do anything if the operation is already in progress
 
         view.showProgressIndicator()
         isInProgress = true
@@ -61,7 +61,6 @@ abstract class AbstractMovieListPresenter : MovieListContract.Presenter {
                     view.hideProgressIndicator()
                     isInProgress = false
                 }
-
             })
     }
 
@@ -69,5 +68,4 @@ abstract class AbstractMovieListPresenter : MovieListContract.Presenter {
         lastLoadedPageNumber = 0
         movies = mutableListOf()
     }
-
 }

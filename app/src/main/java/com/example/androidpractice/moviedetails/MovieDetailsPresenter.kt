@@ -74,7 +74,6 @@ class MovieDetailsPresenter : MovieDetailsContract.Presenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { view.showAddedMovieMessage() }
     }
-
 }
 
 /**

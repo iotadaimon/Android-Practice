@@ -8,5 +8,4 @@ import com.example.androidpractice.model.entity.Movie
 abstract class MovieDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDAO
-
 }

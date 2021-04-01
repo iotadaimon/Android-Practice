@@ -124,5 +124,4 @@ class MainActivity : AppCompatActivity() {
             .show()
         finish()
     }
-
 }

@@ -10,7 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidpractice.*
+import com.example.androidpractice.Constants
+import com.example.androidpractice.MovieListContract
+import com.example.androidpractice.R
 import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.moviedetails.MovieDetailsActivity
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -32,7 +34,8 @@ abstract class AbstractMovieListFragment : Fragment(),
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_movie_list, container, false)
@@ -74,7 +77,6 @@ abstract class AbstractMovieListFragment : Fragment(),
             Toast.LENGTH_SHORT
         ).show()
     }
-
 }
 
 class MovieAdapter(
@@ -94,7 +96,6 @@ class MovieAdapter(
             movieTitleTextView.text = movie.title
             movieVoteAverageTextView.text = movie.voteAverage.toString()
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -112,7 +113,6 @@ class MovieAdapter(
             movieListView.showMovieDetails(movieList[position]) // Open movie details on click on the movie list item
         }
     }
-
 }
 
 class MovieListScrollListener(
@@ -133,5 +133,4 @@ class MovieListScrollListener(
             presenter.presentMovies(currentPageNumber)
         }
     }
-
 }

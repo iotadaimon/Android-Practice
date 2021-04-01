@@ -23,5 +23,4 @@ object MovieDatabaseSingleton {
 
         movieDAO = movieDatabase.movieDao()
     }
-
 }

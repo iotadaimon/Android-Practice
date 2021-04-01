@@ -34,5 +34,4 @@ class LocalStorageModel(
         val bitmap = picasso.load("$posterDirPath${movie.posterPath}").get()
         it.onSuccess(bitmap)
     }
-
 }

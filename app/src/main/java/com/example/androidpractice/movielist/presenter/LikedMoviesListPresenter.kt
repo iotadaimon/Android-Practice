@@ -9,5 +9,4 @@ class LikedMoviesListPresenter : AbstractMovieListPresenter() {
     init {
         model = LocalStorageModel(MovieDatabaseSingleton.movieDAO, Constants.POSTER_SOURCE_URI)
     }
-
 }

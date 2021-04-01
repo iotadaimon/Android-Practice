@@ -105,5 +105,4 @@ class MovieDetailsActivity : AppCompatActivity(),
         message,
         Toast.LENGTH_SHORT
     )
-
 }

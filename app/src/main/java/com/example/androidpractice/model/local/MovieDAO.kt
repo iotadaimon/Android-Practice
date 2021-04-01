@@ -22,5 +22,4 @@ interface MovieDAO {
 
     @Delete
     fun delete(movie: Movie): Completable
-
 }

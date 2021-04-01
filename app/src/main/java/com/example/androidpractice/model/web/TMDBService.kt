@@ -20,5 +20,4 @@ interface TMDBService {
         @Query("page") page: Int = DEFAULT_PAGE_ARGUMENT,
         @Query("region") region: String = DEFAULT_REGION_ARGUMENT
     ): Single<TMDBResponse>
-
 }
