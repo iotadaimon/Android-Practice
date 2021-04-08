@@ -1,17 +1,16 @@
 package com.example.androidpractice.activity
 
 import android.os.Bundle
-import android.widget.FrameLayout
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import com.google.android.material.navigation.NavigationView
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.commit
 import com.example.androidpractice.R
+import com.example.androidpractice.databinding.ActivityMainBinding
+import com.example.androidpractice.databinding.DrawerHeaderMainBinding
 import com.example.androidpractice.movielist.view.AllMoviesFragment
 import com.example.androidpractice.movielist.view.LikedMoviesFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -20,40 +19,34 @@ import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var binding: ActivityMainBinding
+
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var navigationView: NavigationView
-    private lateinit var fragmentFrameLayout: FrameLayout
 
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
+        setSupportActionBar(binding.toolbar)
 
         toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
+            this, binding.drawerLayout, binding.toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
-        drawerLayout.addDrawerListener(toggle)
+        binding.drawerLayout.addDrawerListener(toggle)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        navigationView = findViewById(R.id.navigation_view)
-
         firebaseAuth = FirebaseAuth.getInstance()
         val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
 
-        initDrawerHeaderWithUserData(firebaseUser)
+        initDrawerHeaderWithUserData(binding.navigationView.getHeaderView(0), firebaseUser)
 
-        navigationView.setNavigationItemSelectedListener { menuItem ->
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_all_movies -> showAllMoviesFragment()
                 R.id.nav_liked_movies -> showLikedMoviesFragment()
@@ -61,19 +54,14 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-        fragmentFrameLayout = findViewById(R.id.fragment_frameLayout)
     }
 
-    private fun initDrawerHeaderWithUserData(firebaseUser: FirebaseUser?) {
+    private fun initDrawerHeaderWithUserData(drawerHeaderView: View, firebaseUser: FirebaseUser?) {
         // Get layout elements
-        val navigationHeader = navigationView.getHeaderView(0)
-        val drawerHeaderImageView: ImageView =
-            navigationHeader.findViewById(R.id.drawer_header_imageView)
-        val drawerHeaderNameTextView: TextView =
-            navigationHeader.findViewById(R.id.drawer_header_name_textView)
-        val drawerHeaderEmailTextView: TextView =
-            navigationHeader.findViewById(R.id.drawer_header_email_textView)
+        val navigationHeader = DrawerHeaderMainBinding.bind(drawerHeaderView)
+        val drawerHeaderImageView: ImageView = navigationHeader.drawerHeaderImageView
+        val drawerHeaderNameTextView: TextView = navigationHeader.drawerHeaderNameTextView
+        val drawerHeaderEmailTextView: TextView = navigationHeader.drawerHeaderEmailTextView
 
         // Load user photo
         val photoUrl = firebaseUser?.photoUrl
@@ -90,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             // Show the default fragment on app launch
-            navigationView.setCheckedItem(R.id.nav_all_movies)
+            binding.navigationView.setCheckedItem(R.id.nav_all_movies)
             showAllMoviesFragment()
         }
     }
@@ -106,13 +94,13 @@ class MainActivity : AppCompatActivity() {
      *  with the value passed into [toolbarTitle].
      */
     private fun switchFragment(toolbarTitle: String, fragment: androidx.fragment.app.Fragment) {
-        toolbar.title = toolbarTitle
+        binding.toolbar.title = toolbarTitle
 
         supportFragmentManager.commit {
             replace(R.id.fragment_frameLayout, fragment)
         }
 
-        drawerLayout.closeDrawers()
+        binding.drawerLayout.closeDrawers()
     }
 
     /**

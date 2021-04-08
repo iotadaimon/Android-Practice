@@ -3,10 +3,10 @@ package com.example.androidpractice.movielist.view.base
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.R
+import com.example.androidpractice.databinding.RecyclerviewItemMovieBinding
 import com.example.androidpractice.model.entity.Movie
 
 class MovieAdapter(
@@ -16,14 +16,11 @@ class MovieAdapter(
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val movieTitleTextView: TextView =
-            itemView.findViewById(R.id.movie_item_title_textView)
-        private val movieVoteAverageTextView: TextView =
-            itemView.findViewById(R.id.movie_item_vote_average_textView)
+        private val binding = RecyclerviewItemMovieBinding.bind(itemView)
 
         fun bind(movie: Movie) {
-            movieTitleTextView.text = movie.title
-            movieVoteAverageTextView.text = movie.voteAverage.toString()
+            binding.movieItemTitleTextView.text = movie.title
+            binding.movieItemVoteAverageTextView.text = movie.voteAverage.toString()
         }
     }
 

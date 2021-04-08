@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.R
 import com.example.androidpractice.movielist.presenter.AllMoviesListPresenter
+import com.example.androidpractice.movielist.view.base.AbstractMovieListFragment
 
 class AllMoviesFragment : AbstractMovieListFragment(), MovieListContract.View {
 
