@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.example.androidpractice.R
 import com.example.androidpractice.databinding.ActivityMainBinding
@@ -16,17 +15,22 @@ import com.example.androidpractice.movielist.view.LikedMoviesFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.squareup.picasso.Picasso
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var toggle: ActionBarDrawerToggle
-
     private lateinit var firebaseAuth: FirebaseAuth
+
+    @Inject
+    lateinit var picasso: Picasso
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         // Load user photo
         val photoUrl = firebaseUser?.photoUrl
-        if (photoUrl != null) Picasso.get().load(photoUrl).into(drawerHeaderImageView)
+        if (photoUrl != null) picasso.load(photoUrl).into(drawerHeaderImageView)
 
         // Assign text with name and email to header fields
         drawerHeaderNameTextView.text = firebaseUser?.displayName
