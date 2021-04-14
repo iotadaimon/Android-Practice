@@ -2,14 +2,14 @@ package com.example.androidpractice.movielist.view
 
 import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.R
+import com.example.androidpractice.dagger.LocalMoviePresenter
 import com.example.androidpractice.movielist.view.base.AbstractMovieListFragment
 import javax.inject.Inject
-import javax.inject.Named
 
 class LikedMoviesFragment : AbstractMovieListFragment(), MovieListContract.View {
 
     @Inject
-    @Named("local_presenter")
+    @LocalMoviePresenter
     override lateinit var presenter: MovieListContract.Presenter
 
     override fun onStart() {

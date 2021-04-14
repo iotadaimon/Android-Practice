@@ -2,16 +2,16 @@ package com.example.androidpractice.model.local
 
 import android.graphics.Bitmap
 import com.example.androidpractice.MutableMovieModel
+import com.example.androidpractice.dagger.PosterRepositoryBaseUrl
 import com.example.androidpractice.model.entity.Movie
 import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
-import javax.inject.Named
 
 class LocalStorageModel @Inject constructor(
     private val movieDAO: MovieDAO,
-    @Named("poster_source_uri") private val posterDirPath: String,
+    @PosterRepositoryBaseUrl private val posterRepoBaseUrl: String,
     private val pageSize: Int
 ) : MutableMovieModel {
 
@@ -34,7 +34,7 @@ class LocalStorageModel @Inject constructor(
     override fun getMoviesByIdRx(id: Int): Single<List<Movie>> = movieDAO.loadAllById(id)
 
     override fun getMoviePosterRx(movie: Movie): Single<Bitmap?> = Single.create {
-        val bitmap = picasso.load("$posterDirPath${movie.posterPath}").get()
+        val bitmap = picasso.load("$posterRepoBaseUrl${movie.posterPath}").get()
         it.onSuccess(bitmap)
     }
 }

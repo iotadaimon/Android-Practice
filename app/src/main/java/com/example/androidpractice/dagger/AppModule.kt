@@ -13,5 +13,9 @@ object AppModule {
     fun providePicasso(): Picasso = Picasso.get()
 
     @Provides
+    @DatabaseName
+    fun provideDatabaseName(): String = "movie_database"
+
+    @Provides
     fun providePageSize(): Int = 20
 }

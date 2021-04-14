@@ -26,8 +26,7 @@ abstract class AbstractMovieListFragment : DaggerFragment(),
     @Inject
     var pageSize: Int = 0
 
-    private var _binding: FragmentMovieListBinding? = null
-    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView.
+    private lateinit var binding: FragmentMovieListBinding
 
     private lateinit var progressIndicator: LinearProgressIndicator
 
@@ -43,7 +42,7 @@ abstract class AbstractMovieListFragment : DaggerFragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        binding = FragmentMovieListBinding.inflate(inflater, container, false)
         val view = binding.root
 
         activity?.let {

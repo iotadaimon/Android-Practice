@@ -13,10 +13,14 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideMovieDatabase(application: Application): MovieDatabase = Room.databaseBuilder(
-        application,
-        MovieDatabase::class.java, "movie_database"
-    ).build()
+    fun provideMovieDatabase(
+        application: Application,
+        @DatabaseName databaseName: String
+    ): MovieDatabase =
+        Room.databaseBuilder(
+            application,
+            MovieDatabase::class.java, databaseName
+        ).build()
 
     @Singleton
     @Provides

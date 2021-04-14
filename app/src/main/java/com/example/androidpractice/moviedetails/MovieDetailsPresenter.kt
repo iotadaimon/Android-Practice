@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 class MovieDetailsPresenter @Inject constructor() : MovieDetailsContract.Presenter {
 
+    @Inject
     lateinit var model: MutableMovieModel
 
     private lateinit var view: MovieDetailsContract.View
