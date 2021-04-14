@@ -1,30 +1,33 @@
 package com.example.androidpractice.model.local
 
 import android.graphics.Bitmap
-import com.example.androidpractice.Constants
 import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.model.entity.Movie
 import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
+import javax.inject.Named
 
-class LocalStorageModel(
+class LocalStorageModel @Inject constructor(
     private val movieDAO: MovieDAO,
-    private val posterDirPath: String
+    @Named("poster_source_uri") private val posterDirPath: String,
+    private val pageSize: Int
 ) : MutableMovieModel {
 
-    private val picasso: Picasso = Picasso.get()
+    @Inject
+    lateinit var picasso: Picasso
 
     override fun addMovieRx(movie: Movie): Completable = movieDAO.insertAll(movie)
 
     override fun removeMovieRx(movie: Movie): Completable = movieDAO.delete(movie)
 
     override fun getMoviePageRx(pageNumber: Int): Single<List<Movie>> {
-        val startIndex = (pageNumber - 1) * Constants.MOVIE_LIST_PAGE_SIZE
+        val startIndex = (pageNumber - 1) * pageSize
 
-        return movieDAO.loadAllBetweenRows(
+        return movieDAO.loadRowsWithOffset(
             startIndex.toLong(),
-            Constants.MOVIE_LIST_PAGE_SIZE
+            pageSize
         )
     }
 

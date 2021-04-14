@@ -8,15 +8,16 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
-abstract class AbstractMovieListPresenter : MovieListContract.Presenter {
+class MovieListPresenter @Inject constructor() : MovieListContract.Presenter {
 
-    protected lateinit var model: MovieModel // Assign model on instantiation
-    protected lateinit var view: MovieListContract.View // Assign view after creation
+    lateinit var model: MovieModel // Assign model on instantiation
+    private lateinit var view: MovieListContract.View // Assign view after creation
 
-    protected var lastLoadedPageNumber = 0
-    protected var movies: MutableList<Movie> = mutableListOf() // List for caching
-    protected var isInProgress: Boolean = false
+    private var lastLoadedPageNumber = 0
+    private var movies: MutableList<Movie> = mutableListOf() // List for caching
+    private var isInProgress: Boolean = false
 
     override fun attachView(view: MovieListContract.View) {
         this.view = view

@@ -1,21 +1,16 @@
 package com.example.androidpractice.moviedetails
 
-import com.example.androidpractice.Constants
 import com.example.androidpractice.MovieDetailsContract
 import com.example.androidpractice.MutableMovieModel
 import com.example.androidpractice.model.entity.Movie
-import com.example.androidpractice.model.local.LocalStorageModel
-import com.example.androidpractice.model.local.MovieDatabaseSingleton
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
-class MovieDetailsPresenter : MovieDetailsContract.Presenter {
+class MovieDetailsPresenter @Inject constructor() : MovieDetailsContract.Presenter {
 
-    private val model: MutableMovieModel = LocalStorageModel(
-        MovieDatabaseSingleton.movieDAO,
-        Constants.POSTER_SOURCE_URI
-    )
+    lateinit var model: MutableMovieModel
 
     private lateinit var view: MovieDetailsContract.View
 

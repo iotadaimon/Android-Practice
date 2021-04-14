@@ -5,14 +5,17 @@ import com.example.androidpractice.MovieModel
 import com.example.androidpractice.model.entity.Movie
 import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
+import javax.inject.Named
 
-class TMDBModel(
+class TMDBModel @Inject constructor(
     private val tmdbService: TMDBService,
-    private val apiKey: String,
-    private val posterDirPath: String
+    @Named("tmdb_api_key") private val apiKey: String,
+    @Named("poster_source_uri") private val posterDirPath: String
 ) : MovieModel {
 
-    private val picasso: Picasso = Picasso.get()
+    @Inject
+    lateinit var picasso: Picasso
 
     override fun getMoviePageRx(pageNumber: Int): Single<List<Movie>> =
         tmdbService.getPopularMovies(apiKey, page = pageNumber)

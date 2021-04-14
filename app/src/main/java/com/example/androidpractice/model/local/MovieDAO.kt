@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.core.Single
 interface MovieDAO {
 
     @Query("SELECT * FROM liked_movies ORDER BY title LIMIT (:rowNumber) OFFSET (:offset)")
-    fun loadAllBetweenRows(offset: Long, rowNumber: Int): Single<List<Movie>>
+    fun loadRowsWithOffset(offset: Long, rowNumber: Int): Single<List<Movie>>
 
     @Query("SELECT * FROM liked_movies WHERE id = (:movieId)")
     fun loadAllById(movieId: Int): Single<List<Movie>>

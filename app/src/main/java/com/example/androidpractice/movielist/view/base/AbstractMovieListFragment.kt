@@ -1,25 +1,30 @@
 package com.example.androidpractice.movielist.view.base
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.androidpractice.Constants
 import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.R
 import com.example.androidpractice.databinding.FragmentMovieListBinding
 import com.example.androidpractice.model.entity.Movie
 import com.example.androidpractice.moviedetails.MovieDetailsActivity
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-abstract class AbstractMovieListFragment : Fragment(),
+abstract class AbstractMovieListFragment : DaggerFragment(),
     MovieListContract.View {
 
-    protected lateinit var presenter: MovieListContract.Presenter
+    open lateinit var presenter: MovieListContract.Presenter
+
+    @JvmField
+    @Inject
+    var pageSize: Int = 0
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView.
@@ -27,6 +32,11 @@ abstract class AbstractMovieListFragment : Fragment(),
     private lateinit var progressIndicator: LinearProgressIndicator
 
     private lateinit var recyclerViewAdapter: MovieAdapter
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        presenter.attachView(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +55,7 @@ abstract class AbstractMovieListFragment : Fragment(),
 
         binding.movieListRecyclerView.addOnScrollListener(
             MovieListScrollListener(
-                Constants.MOVIE_LIST_PAGE_SIZE,
+                pageSize,
                 binding.movieListRecyclerView.layoutManager as LinearLayoutManager,
                 presenter
             )

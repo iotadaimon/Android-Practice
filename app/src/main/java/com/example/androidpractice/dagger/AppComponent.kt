@@ -12,7 +12,13 @@ import javax.inject.Singleton
 @Component(
     modules = [AndroidSupportInjectionModule::class,
         ActivityBuildersModule::class,
-        AppModule::class]
+        AppModule::class,
+        FragmentBuildersModule::class,
+        MovieListPresenterModule::class,
+        MovieDetailsPresenterModule::class,
+        ModelModule::class,
+        NetworkModule::class,
+        RoomModule::class]
 )
 interface AppComponent : AndroidInjector<MovieApplication> {
 

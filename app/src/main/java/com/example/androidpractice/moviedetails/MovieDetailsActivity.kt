@@ -4,15 +4,16 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.androidpractice.MovieDetailsContract
 import com.example.androidpractice.R
 import com.example.androidpractice.databinding.ActivityMovieDetailsBinding
 import com.example.androidpractice.databinding.RecyclerviewItemMoviePropertyBinding
 import com.example.androidpractice.model.entity.Movie
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-class MovieDetailsActivity : AppCompatActivity(),
+class MovieDetailsActivity : DaggerAppCompatActivity(),
     MovieDetailsContract.View {
 
     companion object {
@@ -23,7 +24,8 @@ class MovieDetailsActivity : AppCompatActivity(),
 
     private lateinit var movie: Movie
 
-    private lateinit var presenter: MovieDetailsContract.Presenter
+    @Inject
+    lateinit var presenter: MovieDetailsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +37,6 @@ class MovieDetailsActivity : AppCompatActivity(),
             finish()
         }
 
-        presenter = MovieDetailsPresenter()
         presenter.attachView(this)
     }
 

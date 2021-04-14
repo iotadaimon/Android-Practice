@@ -10,5 +10,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providePicasso() = Picasso.get()
+    fun providePicasso(): Picasso = Picasso.get()
+
+    @Provides
+    fun providePageSize(): Int = 20
 }

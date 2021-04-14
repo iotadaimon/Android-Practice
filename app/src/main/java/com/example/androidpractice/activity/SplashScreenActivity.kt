@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpractice.R
-import com.example.androidpractice.model.local.MovieDatabaseSingleton
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -23,8 +22,6 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN // Set to fullscreen
-
-        MovieDatabaseSingleton.prepareDatabase(this)
 
         // Launch with a delay
         Handler(Looper.getMainLooper()).postDelayed(this::launchApp, SPLASH_SCREEN_DELAY_MS)
