@@ -6,7 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.example.androidpractice.R
 import com.example.androidpractice.databinding.ActivityMainBinding
 import com.example.androidpractice.databinding.DrawerHeaderMainBinding
@@ -88,20 +90,20 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun showAllMoviesFragment() =
-        switchFragment(getString(R.string.nav_all_movies), AllMoviesFragment())
+        switchFragment<AllMoviesFragment>(getString(R.string.nav_all_movies))
 
     private fun showLikedMoviesFragment() =
-        switchFragment(getString(R.string.nav_liked_movies), LikedMoviesFragment())
+        switchFragment<LikedMoviesFragment>(getString(R.string.nav_liked_movies))
 
     /**
-     *  Show the fragment passed through the [fragment] parameter and change the title
+     *  Show the fragment passed through the generic parameter and change the title
      *  with the value passed into [toolbarTitle].
      */
-    private fun switchFragment(toolbarTitle: String, fragment: androidx.fragment.app.Fragment) {
+    private inline fun <reified T : Fragment> switchFragment(toolbarTitle: String) {
         binding.toolbar.title = toolbarTitle
 
         supportFragmentManager.commit {
-            replace(R.id.fragment_frameLayout, fragment)
+            replace<T>(R.id.fragment_frameLayout)
         }
 
         binding.drawerLayout.closeDrawers()
