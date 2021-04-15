@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class MovieListPresenter @Inject constructor() : MovieListContract.Presenter {
 
-    lateinit var model: MovieModel // Assign model on instantiation
+    lateinit var model: MovieModel // Assign model after creation
     private lateinit var view: MovieListContract.View // Assign view after creation
 
     private var lastLoadedPageNumber = 0
@@ -24,14 +24,14 @@ class MovieListPresenter @Inject constructor() : MovieListContract.Presenter {
     }
 
     override fun presentMovies(upToPageNumber: Int, refresh: Boolean) {
-        if (isInProgress) return // Don't do anything if the operation is already in progress
-
-        view.showProgressIndicator()
-        isInProgress = true
-
+        if (isInProgress) return
         if (refresh) clearCache()
 
         val pagesToLoadRange = (lastLoadedPageNumber + 1)..upToPageNumber
+        if (pagesToLoadRange.isEmpty()) return // Return if upToPageNumber is less than or equal to last loaded page number
+
+        view.showProgressIndicator()
+        isInProgress = true
 
         val moviePageSingleList = pagesToLoadRange
             .map { pageNumber -> model.getMoviePageRx(pageNumber).toObservable() }
@@ -50,6 +50,7 @@ class MovieListPresenter @Inject constructor() : MovieListContract.Presenter {
                 }
 
                 override fun onError(e: Throwable?) {
+                    isInProgress = false
                     view.hideProgressIndicator()
                     view.showErrorToast()
                 }

@@ -10,16 +10,15 @@ class MovieListScrollListener(
     private val presenter: MovieListContract.Presenter
 ) : RecyclerView.OnScrollListener() {
 
-    private var currentPageNumber = 1
-
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 
+        val movieItemsLoaded = linearLayoutManager.itemCount
         val lastVisibleMovieItemIndex = linearLayoutManager.findLastVisibleItemPosition()
 
-        if (lastVisibleMovieItemIndex + 1 == pageSize * currentPageNumber) {
-            currentPageNumber++ // TODO - Don't increment page number if the preseter fails to present movies
-            presenter.presentMovies(currentPageNumber)
+        if (lastVisibleMovieItemIndex + 1 == movieItemsLoaded) {
+            val currentPageNumber = movieItemsLoaded / pageSize
+            presenter.presentMovies(currentPageNumber + 1) // Present next page if all loaded movies have been shown
         }
     }
 }

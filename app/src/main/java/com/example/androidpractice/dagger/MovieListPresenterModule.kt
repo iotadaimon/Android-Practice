@@ -5,12 +5,10 @@ import com.example.androidpractice.MovieModel
 import com.example.androidpractice.movielist.presenter.MovieListPresenter
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 object MovieListPresenterModule {
 
-    @Singleton
     @Provides
     @WebMoviePresenter
     fun provideAllMoviesPresenter(
@@ -18,7 +16,6 @@ object MovieListPresenterModule {
         @WebModel model: MovieModel
     ): MovieListContract.Presenter = movieListPresenter.apply { this.model = model }
 
-    @Singleton
     @Provides
     @LocalMoviePresenter
     fun provideLikedMoviesPresenter(
