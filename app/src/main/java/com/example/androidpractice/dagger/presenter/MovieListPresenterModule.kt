@@ -22,5 +22,4 @@ object MovieListPresenterModule {
     @LocalMoviePresenter
     fun provideLikedMoviesPresenter(@LocalImmutableModel model: MovieModel): MovieListContract.Presenter =
         MovieListPresenter(model)
-
 }

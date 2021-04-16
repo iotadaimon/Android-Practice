@@ -12,10 +12,9 @@ import io.reactivex.rxjava3.core.Single
 interface MovieModel {
 
     fun getMoviePageRx(pageNumber: Int = 1): Single<List<Movie>>
+
     // Optional
-    fun getMoviesByIdRx(id: Int): Single<List<Movie>> {
-        TODO("Not yet implemented")
-    }
+    fun getMoviesByIdRx(id: Int): Single<List<Movie>> = throw NotImplementedError()
 
     fun getMoviePosterRx(movie: Movie): Single<Bitmap?>
 }
@@ -71,6 +70,8 @@ interface MovieDetailsContract {
         fun showAddedMovieMessage()
 
         fun showDeletedMovieMessage()
+
+        fun showErrorToast()
     }
 
     interface Presenter {

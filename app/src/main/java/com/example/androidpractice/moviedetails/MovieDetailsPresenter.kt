@@ -19,15 +19,15 @@ class MovieDetailsPresenter @Inject constructor() : MovieDetailsContract.Present
         this.view = view
     }
 
-    // TODO - handle error cases
     override fun presentMovieDetails(movie: Movie) {
         val movieProperties = movie.getMovieProperties()
 
         model.getMoviePosterRx(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { posterBitmap ->
-                view.showMovieDetails(posterBitmap, movieProperties)
+            .subscribe { moviePosterBitmap, throwable ->
+                if (throwable != null) view.showErrorToast()
+                view.showMovieDetails(moviePosterBitmap, movieProperties)
             }
     }
 
@@ -76,17 +76,12 @@ class MovieDetailsPresenter @Inject constructor() : MovieDetailsContract.Present
  * Extract and return the list of properties from a [Movie] instance.
  */
 private fun Movie.getMovieProperties(): Map<String, Any?> = linkedMapOf(
-    "Adult" to this.isAdult,
+    "Title" to this.title,
+    "Original Title" to this.originalTitle,
     "Overview" to this.overview,
     "Release Date" to this.releaseDate,
-    "ID" to this.id,
-    "Genre IDs" to this.genreIDs,
-    "Original Title" to this.originalTitle,
     "Language" to this.originalLanguage,
-    "Title" to this.title,
-    "Backdrop Path" to this.backdropPath,
-    "Popularity" to this.popularity,
-    "Vote Vount" to this.voteCount,
-    "Video" to this.video,
-    "Vote Average" to this.voteAverage
+    "Adult" to if (this.isAdult == true) "yes" else "no",
+    "Vote Average" to this.voteAverage,
+    "Vote Count" to this.voteCount
 )

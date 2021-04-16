@@ -33,7 +33,7 @@ class MovieDetailsActivity : DaggerAppCompatActivity(),
         setContentView(binding.root)
 
         movie = intent.getParcelableExtra(DATA_MOVIE) ?: Movie().also {
-            makeToast(resources.getString(R.string.movie_details_error_message))
+            showErrorToast()
             finish()
         }
 
@@ -88,6 +88,9 @@ class MovieDetailsActivity : DaggerAppCompatActivity(),
 
     override fun showDeletedMovieMessage() =
         makeToast(resources.getString(R.string.liked_movie_removed)).show()
+
+    override fun showErrorToast() =
+        makeToast(resources.getString(R.string.movie_details_error_message)).show()
 
     private fun makeToast(message: String) = Toast.makeText(
         this,
