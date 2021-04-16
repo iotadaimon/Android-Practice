@@ -13,6 +13,6 @@
         android:layout_height="@dimen/splash_screen_logo_size"
         android:background="@drawable/ic_launcher_background"
         android:contentDescription="@string/splash_screen_image_description"
-        android:src="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
 </LinearLayout>
