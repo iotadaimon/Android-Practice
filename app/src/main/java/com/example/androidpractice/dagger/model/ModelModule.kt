@@ -1,7 +1,9 @@
-package com.example.androidpractice.dagger
+package com.example.androidpractice.dagger.model
 
 import com.example.androidpractice.MovieModel
 import com.example.androidpractice.MutableMovieModel
+import com.example.androidpractice.dagger.LocalImmutableModel
+import com.example.androidpractice.dagger.WebModel
 import com.example.androidpractice.model.local.LocalStorageModel
 import com.example.androidpractice.model.web.TMDBModel
 import dagger.Binds

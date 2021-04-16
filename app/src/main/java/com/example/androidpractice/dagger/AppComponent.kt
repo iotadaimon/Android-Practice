@@ -2,6 +2,11 @@ package com.example.androidpractice.dagger
 
 import android.app.Application
 import com.example.androidpractice.MovieApplication
+import com.example.androidpractice.dagger.model.ModelModule
+import com.example.androidpractice.dagger.model.NetworkModule
+import com.example.androidpractice.dagger.model.RoomModule
+import com.example.androidpractice.dagger.presenter.MovieDetailsPresenterModule
+import com.example.androidpractice.dagger.presenter.MovieListPresenterModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector

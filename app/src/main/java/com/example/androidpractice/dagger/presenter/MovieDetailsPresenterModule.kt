@@ -1,4 +1,4 @@
-package com.example.androidpractice.dagger
+package com.example.androidpractice.dagger.presenter
 
 import com.example.androidpractice.MovieDetailsContract
 import com.example.androidpractice.moviedetails.MovieDetailsPresenter

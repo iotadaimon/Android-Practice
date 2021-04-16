@@ -1,5 +1,7 @@
-package com.example.androidpractice.dagger
+package com.example.androidpractice.dagger.model
 
+import com.example.androidpractice.dagger.ApiKey
+import com.example.androidpractice.dagger.PosterRepositoryBaseUrl
 import com.example.androidpractice.model.web.TMDBService
 import dagger.Module
 import dagger.Provides

@@ -8,11 +8,10 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import javax.inject.Inject
 
-class MovieListPresenter @Inject constructor() : MovieListContract.Presenter {
+class MovieListPresenter(private val model: MovieModel) :
+    MovieListContract.Presenter {
 
-    lateinit var model: MovieModel // Assign model after creation
     private lateinit var view: MovieListContract.View // Assign view after creation
 
     private var lastLoadedPageNumber = 0
