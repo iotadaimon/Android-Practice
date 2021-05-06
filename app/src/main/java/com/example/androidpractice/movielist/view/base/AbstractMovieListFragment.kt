@@ -64,8 +64,7 @@ abstract class AbstractMovieListFragment : DaggerFragment(),
     }
 
     override fun showMovies(movies: List<Movie>) {
-        recyclerViewAdapter.movieList = movies
-        recyclerViewAdapter.notifyDataSetChanged()
+        recyclerViewAdapter.setData(movies)
     }
 
     override fun showMovieDetails(movie: Movie) {

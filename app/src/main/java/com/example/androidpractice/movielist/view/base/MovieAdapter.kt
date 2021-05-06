@@ -3,6 +3,7 @@ package com.example.androidpractice.movielist.view.base
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpractice.MovieListContract
 import com.example.androidpractice.R
@@ -10,7 +11,7 @@ import com.example.androidpractice.databinding.RecyclerviewItemMovieBinding
 import com.example.androidpractice.model.entity.Movie
 
 class MovieAdapter(
-    internal var movieList: List<Movie>,
+    private var movieList: MutableList<Movie>,
     private val movieListView: MovieListContract.View
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -38,5 +39,17 @@ class MovieAdapter(
         holder.itemView.setOnClickListener {
             movieListView.showMovieDetails(movieList[position]) // Open movie details on click on the movie list item
         }
+    }
+
+    internal fun getData(): List<Movie> = movieList
+
+    internal fun setData(newMovieList: List<Movie>) {
+        val diffResult: DiffUtil.DiffResult =
+            DiffUtil.calculateDiff(DiffCallback(getData(), newMovieList))
+
+        movieList.clear()
+        movieList.addAll(newMovieList)
+
+        diffResult.dispatchUpdatesTo(this)
     }
 }
