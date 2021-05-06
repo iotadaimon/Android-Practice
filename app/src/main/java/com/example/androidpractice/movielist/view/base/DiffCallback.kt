@@ -15,5 +15,4 @@ class DiffCallback(private val oldMovies: List<Movie>, private val newMovies: Li
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
         oldMovies[oldItemPosition] == newMovies[newItemPosition]
-
 }
